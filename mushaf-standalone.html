@@ -7,69 +7,75 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--green:#1B5E3B;--green-dark:#0F3D26;--gold:#C9A84C;--gold-light:#E2C47A;--cream:#FAF7F0;}
+:root{--green:#1B5E3B;--green-dark:#0F3D26;--gold:#C9A84C;--gold-light:#E2C47A;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Tajawal',sans-serif;background:#111;color:#fff;min-height:100vh;}
+body{font-family:'Tajawal',sans-serif;background:#0d1117;color:#fff;min-height:100vh;}
 
-nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(15,61,38,0.97);height:62px;border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 3%;}
+nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(15,61,38,0.98);height:62px;border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 3%;}
 .nav-logo{font-family:'Amiri',serif;font-size:1.1rem;color:var(--gold);text-decoration:none;}
 .nav-links{display:flex;gap:2px;list-style:none;}
 .nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.78rem;padding:5px 8px;border-radius:6px;transition:all 0.3s;}
 .nav-links a:hover,.nav-links a.active{background:rgba(201,168,76,0.2);color:var(--gold);}
 .nav-cta{background:var(--gold);color:var(--green-dark);padding:6px 14px;border-radius:50px;font-weight:700;font-size:0.78rem;text-decoration:none;}
 
-.top-bar{position:fixed;top:62px;width:100%;z-index:999;background:rgba(10,40,20,0.97);border-bottom:1px solid rgba(201,168,76,0.2);padding:8px 2%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;}
+.top-bar{position:fixed;top:62px;width:100%;z-index:999;background:rgba(10,40,20,0.98);border-bottom:1px solid rgba(201,168,76,0.2);padding:10px 3%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;}
 
 .ed-toggle{display:flex;background:rgba(255,255,255,0.07);border-radius:50px;padding:3px;gap:2px;}
-.ed-btn{padding:6px 14px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.3s;color:rgba(255,255,255,0.5);background:transparent;}
+.ed-btn{padding:7px 16px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.3s;color:rgba(255,255,255,0.5);background:transparent;}
 .ed-btn.active{background:var(--gold);color:var(--green-dark);}
 
-select.ctrl{padding:7px 12px;border-radius:50px;border:1px solid rgba(201,168,76,0.3);font-family:'Tajawal',sans-serif;font-size:0.78rem;background:rgba(255,255,255,0.07);color:#fff;cursor:pointer;outline:none;}
+.pg-nav{display:flex;align-items:center;gap:7px;}
+.pg-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(201,168,76,0.25);color:#fff;cursor:pointer;font-size:0.95rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.pg-btn:hover{background:var(--gold);color:var(--green-dark);}
+input.pg-in{width:54px;text-align:center;padding:7px 4px;border-radius:8px;border:1px solid rgba(201,168,76,0.35);background:rgba(255,255,255,0.08);color:#fff;font-family:'Tajawal',sans-serif;font-size:0.88rem;outline:none;}
+.pg-tot{color:rgba(255,255,255,0.5);font-size:0.8rem;}
+
+select.ctrl{padding:8px 12px;border-radius:50px;border:1px solid rgba(201,168,76,0.3);font-family:'Tajawal',sans-serif;font-size:0.8rem;background:rgba(255,255,255,0.07);color:#fff;cursor:pointer;outline:none;}
 select.ctrl option{background:#0a2814;}
 
-.pg-nav{display:flex;align-items:center;gap:6px;}
-.pg-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(201,168,76,0.25);color:#fff;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.pg-btn:hover{background:var(--gold);color:var(--green-dark);}
-input.pg-input{width:52px;text-align:center;padding:6px 4px;border-radius:8px;border:1px solid rgba(201,168,76,0.35);background:rgba(255,255,255,0.08);color:#fff;font-family:'Tajawal',sans-serif;font-size:0.85rem;outline:none;}
-.pg-total{color:rgba(255,255,255,0.5);font-size:0.78rem;}
-
-.zoom-row{display:flex;align-items:center;gap:5px;}
-.zm-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:0.82rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-weight:700;}
+.zoom-row{display:flex;align-items:center;gap:6px;}
+.zm-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:0.88rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-weight:700;}
 .zm-btn:hover{background:var(--gold);color:var(--green-dark);}
-.zm-lbl{font-size:0.75rem;color:rgba(255,255,255,0.5);min-width:34px;text-align:center;}
+.zm-lbl{font-size:0.75rem;color:rgba(255,255,255,0.5);min-width:36px;text-align:center;}
 
-.aud-row{display:flex;gap:5px;}
-.aud-btn{width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--green-dark);border:none;cursor:pointer;font-size:0.82rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.aud-row{display:flex;gap:5px;align-items:center;}
+.aud-btn{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--green-dark);border:none;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
 .aud-btn:hover{transform:scale(1.1);}
-.aud-btn.stop-btn{background:rgba(255,255,255,0.1);color:#fff;}
-.aud-btn.playing{animation:ap 0.8s infinite;}
-@keyframes ap{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.aud-btn.stop{background:rgba(255,255,255,0.1);color:#fff;}
+.aud-btn.on{animation:ap 0.8s infinite;}
+@keyframes ap{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
 
-.mushaf-wrap{margin-top:118px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px;min-height:calc(100vh - 118px);}
+/* MUSHAF DISPLAY */
+.mushaf-wrap{margin-top:120px;display:flex;flex-direction:column;align-items:center;padding:16px;min-height:calc(100vh - 120px);}
 
-.page-box{position:relative;display:inline-flex;align-items:center;justify-content:center;}
-#mushafImg{border-radius:6px;box-shadow:0 16px 60px rgba(0,0,0,0.85);max-width:min(580px,95vw);width:100%;transition:opacity 0.4s,width 0.3s;}
-#mushafImg.dimmed{opacity:0.25;}
+.mushaf-page{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
+  overflow:hidden;
+  width:min(580px,95vw);
+  transition:transform 0.3s;
+  position:relative;
+}
 
-.spinner-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;}
-.spinner-overlay i{font-size:2.2rem;color:var(--gold);animation:spin 1s linear infinite;}
-.spinner-overlay p{color:rgba(255,255,255,0.7);font-size:0.85rem;}
+/* Page image display */
+.page-img-wrap{width:100%;position:relative;min-height:400px;display:flex;align-items:center;justify-content:center;background:#faf8f0;}
+#pageImg{width:100%;height:auto;display:block;transition:opacity 0.3s;}
+#pageImg.dim{opacity:0.2;}
+
+.page-spinner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(250,248,240,0.9);}
+.page-spinner i{font-size:2rem;color:var(--green);animation:spin 1s linear infinite;}
+.page-spinner p{color:var(--green);font-size:0.88rem;font-family:'Tajawal',sans-serif;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-.info-bar{display:flex;gap:14px;align-items:center;margin-top:12px;background:rgba(255,255,255,0.05);border-radius:50px;padding:7px 18px;flex-wrap:wrap;justify-content:center;}
-.info-bar span{font-size:0.78rem;color:rgba(255,255,255,0.6);}
+.info-bar{display:flex;gap:14px;align-items:center;margin-top:12px;background:rgba(255,255,255,0.05);border-radius:50px;padding:8px 20px;flex-wrap:wrap;justify-content:center;}
+.info-bar span{font-size:0.8rem;color:rgba(255,255,255,0.6);}
 .info-bar strong{color:var(--gold);}
-.swipe-tip{color:rgba(255,255,255,0.2);font-size:0.72rem;margin-top:6px;text-align:center;}
+.swipe-tip{color:rgba(255,255,255,0.2);font-size:0.72rem;margin-top:8px;}
 
-.err-box{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:12px;padding:50px 30px;text-align:center;max-width:460px;display:none;}
-.err-box i{font-size:2.5rem;color:var(--gold);margin-bottom:12px;display:block;}
-.err-box h3{font-family:'Amiri',serif;font-size:1.4rem;margin-bottom:8px;}
-.err-box p{color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.7;margin-bottom:16px;}
-.retry-btn{background:var(--gold);color:var(--green-dark);border:none;padding:9px 22px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;}
+.wa-float{position:fixed;bottom:22px;left:22px;z-index:999;width:50px;height:50px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.4);}
 
-.wa-float{position:fixed;bottom:22px;left:22px;z-index:999;width:50px;height:50px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,0.45);}
-
-@media(max-width:600px){.nav-links{display:none;}.top-bar{gap:6px;}.ed-btn{padding:5px 10px;font-size:0.74rem;}}
+@media(max-width:600px){.nav-links{display:none;}.top-bar{gap:6px;padding:8px 2%;}}
 </style>
 </head>
 <body>
@@ -89,19 +95,19 @@ input.pg-input{width:52px;text-align:center;padding:6px 4px;border-radius:8px;bo
 
 <div class="top-bar">
   <div class="ed-toggle">
-    <button class="ed-btn active" onclick="setEd('saudi',this)">🇸🇦 السعودي</button>
-    <button class="ed-btn" onclick="setEd('egyptian',this)">🇪🇬 المصري</button>
+    <button class="ed-btn active" onclick="setEd('hafs',this)">🇸🇦 حفص — السعودي</button>
+    <button class="ed-btn" onclick="setEd('warsh',this)">🇪🇬 ورش — المصري</button>
   </div>
 
   <select class="ctrl" id="surahSel" onchange="jumpSurah()">
-    <option value="">— سورة —</option>
+    <option value="">— اختر سورة —</option>
   </select>
 
   <div class="pg-nav">
-    <button class="pg-btn" onclick="go(1)" title="السابقة"><i class="fas fa-chevron-right"></i></button>
-    <input type="number" class="pg-input" id="pgIn" min="1" max="604" value="1" onchange="goPage()">
-    <span class="pg-total">/ 604</span>
-    <button class="pg-btn" onclick="go(-1)" title="التالية"><i class="fas fa-chevron-left"></i></button>
+    <button class="pg-btn" onclick="go(1)"><i class="fas fa-chevron-right"></i></button>
+    <input type="number" class="pg-in" id="pgIn" min="1" max="604" value="1" onchange="goPage()">
+    <span class="pg-tot">/ 604</span>
+    <button class="pg-btn" onclick="go(-1)"><i class="fas fa-chevron-left"></i></button>
   </div>
 
   <div class="zoom-row">
@@ -122,134 +128,185 @@ input.pg-input{width:52px;text-align:center;padding:6px 4px;border-radius:8px;bo
 
   <div class="aud-row">
     <button class="aud-btn" id="playBtn" onclick="toggleAudio()"><i class="fas fa-play" id="playIco"></i></button>
-    <button class="aud-btn stop-btn" onclick="stopAudio()"><i class="fas fa-stop"></i></button>
+    <button class="aud-btn stop" onclick="stopAudio()"><i class="fas fa-stop"></i></button>
   </div>
 </div>
 
 <div class="mushaf-wrap">
-  <div class="page-box">
-    <img id="mushafImg" src="" alt="صفحة القرآن" onload="onLoad()" onerror="onErr()">
-    <div class="spinner-overlay" id="spinner">
-      <i class="fas fa-spinner"></i>
-      <p>جاري تحميل الصفحة...</p>
+  <div class="mushaf-page" id="mushafPage">
+    <div class="page-img-wrap" id="imgWrap">
+      <img id="pageImg" src="" alt="صفحة المصحف" onload="onLoad()" onerror="onErr()">
+      <div class="page-spinner" id="spinner">
+        <i class="fas fa-spinner"></i>
+        <p>جاري تحميل الصفحة...</p>
+      </div>
     </div>
   </div>
-  <div class="err-box" id="errBox">
-    <i class="fas fa-quran"></i>
-    <h3>تعذّر تحميل الصفحة</h3>
-    <p>تأكد من اتصالك بالإنترنت ثم حاول مجدداً</p>
-    <button class="retry-btn" onclick="retry()">إعادة المحاولة</button>
-  </div>
-  <div class="info-bar" id="infoBar">
+
+  <div class="info-bar">
     <span>الصفحة <strong id="pgNum">1</strong></span>
     <span>•</span>
-    <span id="surahName">سورة الفاتحة</span>
+    <span id="surahLbl">سورة الفاتحة</span>
     <span>•</span>
-    <span id="juzName">الجزء الأول</span>
+    <span id="juzLbl">الجزء الأول</span>
+    <span>•</span>
+    <span id="edLbl" style="color:var(--gold);">حفص عن عاصم</span>
   </div>
-  <div class="swipe-tip">← اسحب يميناً أو يساراً للتنقل بين الصفحات →</div>
+  <div class="swipe-tip">← اسحب أو استخدم الأزرار للتنقل →</div>
 </div>
 
 <a href="https://wa.me/201002798497" class="wa-float"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-let pg=1, ed='saudi', rec='ar.alafasy', zm=100, audio=null, playing=false, surahs=[];
+let pg=1, ed='hafs', rec='ar.alafasy', zm=100, aud=null, playing=false, surahs=[];
 
-// Surah start pages (Medina Mushaf - hafs)
-const SP=[1,2,50,77,106,128,151,177,187,208,221,235,249,255,262,267,272,277,282,286,289,293,296,302,306,309,315,318,322,325,328,331,333,336,338,340,342,344,346,349,351,353,355,357,359,360,362,364,366,367,369,371,373,375,376,378,380,382,383,385,387,389,390,392,393,395,396,398,399,400,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,417,418,419,419,420,421,421,422,422,423,423,423,424,424,425,425,425,426,426,426,427,427,427,428,428,428,429,429];
+// Surah start pages - Medina Mushaf (Hafs)
+const SP_HAFS=[1,2,50,77,106,128,151,177,187,208,221,235,249,255,262,267,272,277,282,286,289,293,296,302,306,309,315,318,322,325,328,331,333,336,338,340,342,344,346,349,351,353,355,357,359,360,362,364,366,367,369,371,373,375,376,378,380,382,383,385,387,389,390,392,393,395,396,398,399,400,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,417,418,419,419,420,421,421,422,422,423,423,423,424,424,425,425,425,426,426,426,427,427,427,428,428,428,429,429];
+
+// Surah start pages - Egyptian Mushaf (Warsh) - slightly different
+const SP_WARSH=[1,2,49,76,105,127,150,176,186,207,220,234,248,254,261,266,271,276,281,285,288,292,295,301,305,308,314,317,321,324,327,330,332,335,337,339,341,343,345,348,350,352,354,356,358,359,361,363,365,366,368,370,372,374,375,377,379,381,382,384,386,388,389,391,392,394,395,397,398,399,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,416,417,418,418,419,420,420,421,421,422,422,422,423,423,424,424,424,425,425,425,426,426,426,427,427,427,428,428];
+
 const JP=[1,22,42,62,82,102,121,142,162,182,200,218,235,249,262,272,282,292,302,312,322,332,342,352,362,372,382,392,402,412];
-const AR_NUMS='٠١٢٣٤٥٦٧٨٩';
-const toAr=n=>String(n).replace(/\d/g,d=>AR_NUMS[d]);
-const JUZ_NAMES=['الأول','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع','العاشر','الحادي عشر','الثاني عشر','الثالث عشر','الرابع عشر','الخامس عشر','السادس عشر','السابع عشر','الثامن عشر','التاسع عشر','العشرون','الحادي والعشرون','الثاني والعشرون','الثالث والعشرون','الرابع والعشرون','الخامس والعشرون','السادس والعشرون','السابع والعشرون','الثامن والعشرون','التاسع والعشرون','الثلاثون'];
+const JN=['الأول','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع','العاشر','الحادي عشر','الثاني عشر','الثالث عشر','الرابع عشر','الخامس عشر','السادس عشر','السابع عشر','الثامن عشر','التاسع عشر','العشرون','الحادي والعشرون','الثاني والعشرون','الثالث والعشرون','الرابع والعشرون','الخامس والعشرون','السادس والعشرون','السابع والعشرون','الثامن والعشرون','التاسع والعشرون','الثلاثون'];
+
+// Image sources - multiple CDNs
+const IMG_SOURCES = {
+  hafs: p => [
+    `https://www.quranflash.com/resources/img/hafs/${String(p).padStart(3,'0')}.png`,
+    `https://qurancdn.com/images/Mushaf/${String(p).padStart(3,'0')}.jpg`,
+    `https://archive.org/download/quran-images-hafs/${String(p).padStart(3,'0')}.jpg`,
+  ],
+  warsh: p => [
+    `https://www.quranflash.com/resources/img/warsh/${String(p).padStart(3,'0')}.png`,
+    `https://archive.org/download/quran-images-warsh/${String(p).padStart(3,'0')}.jpg`,
+    `https://www.quranflash.com/resources/img/hafs/${String(p).padStart(3,'0')}.png`,
+  ]
+};
+
+let srcIdx=0;
 
 window.onload=()=>{
   fetch('https://api.alquran.cloud/v1/surah')
     .then(r=>r.json()).then(d=>{
       surahs=d.data;
-      const s=document.getElementById('surahSel');
-      s.innerHTML='<option value="">— سورة —</option>'+
-        surahs.map((x,i)=>`<option value="${SP[i]||1}">${x.number}. ${x.name}</option>`).join('');
+      const SP=ed==='hafs'?SP_HAFS:SP_WARSH;
+      document.getElementById('surahSel').innerHTML=
+        '<option value="">— اختر سورة —</option>'+
+        surahs.map((s,i)=>`<option value="${SP[i]||1}">${s.number}. ${s.name}</option>`).join('');
     }).catch(()=>{});
   loadPage(1);
   setupTouch();
 };
 
-function getUrl(p){
-  const pp = String(p).padStart(3,'0');
-  if(ed === 'saudi'){
-    // Medina Mushaf - Hafs
-    return `https://www.searchtruth.com/quran/images2/${pp}.jpg`;
-  } else {
-    // Egyptian Mushaf - Warsh  
-    return `https://www.searchtruth.com/quran/images2/${pp}.jpg`;
-  }
-}
-
 function loadPage(p){
-  p=Math.max(1,Math.min(604,p)); pg=p;
-  const img=document.getElementById('mushafImg');
-  const sp=document.getElementById('spinner');
-  const eb=document.getElementById('errBox');
-  img.style.display='block'; eb.style.display='none';
-  img.classList.add('dimmed'); sp.style.display='flex';
-  window._triedSrc = 0;
-  img.src=getUrl(p);
+  p=Math.max(1,Math.min(604,p)); pg=p; srcIdx=0;
+  const img=document.getElementById('pageImg');
+  img.classList.add('dim');
+  document.getElementById('spinner').style.display='flex';
   document.getElementById('pgIn').value=p;
   document.getElementById('pgNum').textContent=p;
   updateInfo(p);
+  const urls=IMG_SOURCES[ed](p);
+  img.src=urls[0];
 }
 
 function onLoad(){
-  const img=document.getElementById('mushafImg');
-  img.classList.remove('dimmed');
+  document.getElementById('pageImg').classList.remove('dim');
   document.getElementById('spinner').style.display='none';
-  img.style.maxWidth=`min(${zm*5.8}px,95vw)`;
+  applyZoom();
 }
 
 function onErr(){
-  const img=document.getElementById('mushafImg');
-  // Try alternative CDN sources
-  const pp = String(pg).padStart(3,'0');
-  const sources=[
-    `https://quran.ksu.edu.sa/thumbs/${pg}.jpg`,
-    `https://www.mp3quran.net/api/quran_img/quran_images_hafs/${pp}.jpg`,
-    `https://ia803201.us.archive.org/quranpages/${pp}.jpg`,
-  ];
-  // Find which source we're on
-  let tried = window._triedSrc || 0;
-  if(tried < sources.length){
-    window._triedSrc = tried + 1;
-    img.src = sources[tried];
-    return;
+  const img=document.getElementById('pageImg');
+  const urls=IMG_SOURCES[ed](pg);
+  srcIdx++;
+  if(srcIdx<urls.length){
+    img.src=urls[srcIdx];
+  } else {
+    // All sources failed - show quranflash embed
+    document.getElementById('spinner').style.display='none';
+    showEmbed();
   }
-  window._triedSrc = 0;
-  // Final fallback - use Quran API text
-  showTextFallback();
-  img.style.display='none';
-  document.getElementById('spinner').style.display='none';
-  document.getElementById('errBox').style.display='block';
 }
 
-function retry(){
-  document.getElementById('errBox').style.display='none';
-  loadPage(pg);
+function showEmbed(){
+  const wrap=document.getElementById('imgWrap');
+  const edition=ed==='hafs'?'hafs':'warsh';
+  wrap.innerHTML=`
+    <div style="width:100%;padding:30px;text-align:center;background:#faf8f0;">
+      <p style="color:#1B5E3B;font-family:'Amiri',serif;font-size:1.2rem;margin-bottom:16px;">
+        📖 اضغط لفتح الصفحة ${pg} في QuranFlash
+      </p>
+      <a href="https://www.quranflash.com/ar/${edition}/page/${pg}" target="_blank"
+         style="background:#1B5E3B;color:#fff;padding:14px 28px;border-radius:50px;text-decoration:none;font-family:'Tajawal',sans-serif;font-weight:700;font-size:1rem;display:inline-block;margin:6px;">
+        🌐 فتح المصحف — الصفحة ${pg}
+      </a>
+      <a href="https://quran.com/ar/${pg}" target="_blank"
+         style="background:#C9A84C;color:#0F3D26;padding:14px 28px;border-radius:50px;text-decoration:none;font-family:'Tajawal',sans-serif;font-weight:700;font-size:1rem;display:inline-block;margin:6px;">
+        📖 Quran.com
+      </a>
+      <div style="margin-top:20px;color:#666;font-size:0.82rem;font-family:'Tajawal',sans-serif;">
+        ملاحظة: صور المصحف تحتاج اتصال إنترنت مباشر بالمصدر
+      </div>
+    </div>
+  `;
+}
+
+function applyZoom(){
+  document.getElementById('mushafPage').style.width=`min(${zm*5.8}px,95vw)`;
 }
 
 function updateInfo(p){
+  const SP=ed==='hafs'?SP_HAFS:SP_WARSH;
   let si=0;
   for(let i=SP.length-1;i>=0;i--){if(p>=(SP[i]||1)){si=i;break;}}
-  let juz=0;
-  for(let i=JP.length-1;i>=0;i--){if(p>=JP[i]){juz=i;break;}}
-  document.getElementById('surahName').textContent=surahs[si]?.name||'';
-  document.getElementById('juzName').textContent='الجزء '+JUZ_NAMES[juz];
+  let ji=0;
+  for(let i=JP.length-1;i>=0;i--){if(p>=JP[i]){ji=i;break;}}
+  if(surahs[si]) document.getElementById('surahLbl').textContent=surahs[si].name;
+  document.getElementById('juzLbl').textContent='الجزء '+JN[ji];
+  document.getElementById('edLbl').textContent=ed==='hafs'?'حفص عن عاصم':'ورش عن نافع';
 }
 
-function go(dir){loadPage(pg-dir);stopAudio();}
-function goPage(){const v=parseInt(document.getElementById('pgIn').value);if(v>=1&&v<=604)loadPage(v);}
-function jumpSurah(){const v=parseInt(document.getElementById('surahSel').value);if(v){loadPage(v);stopAudio();}}
-function setEd(e,btn){ed=e;document.querySelectorAll('.ed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(e==='egyptian'&&document.getElementById('recSel').value!=='ar.warsh'){document.getElementById('recSel').value='ar.warsh';rec='ar.warsh';}stopAudio();loadPage(pg);}
+function go(d){
+  stopAudio();
+  // Restore img element if hidden
+  const wrap=document.getElementById('imgWrap');
+  wrap.innerHTML=`<img id="pageImg" src="" alt="صفحة المصحف" onload="onLoad()" onerror="onErr()"><div class="page-spinner" id="spinner"><i class="fas fa-spinner"></i><p>جاري تحميل الصفحة...</p></div>`;
+  loadPage(pg-d);
+}
+function goPage(){const v=parseInt(document.getElementById('pgIn').value);if(v>=1&&v<=604)go(pg-v);}
+
+function jumpSurah(){
+  const v=parseInt(document.getElementById('surahSel').value);
+  if(v){go(pg-v);}
+}
+
+function setEd(e,btn){
+  ed=e;
+  document.querySelectorAll('.ed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(e==='warsh'){
+    document.getElementById('recSel').value='ar.warsh';
+    rec='ar.warsh';
+  }
+  // Update surah list
+  if(surahs.length){
+    const SP=e==='hafs'?SP_HAFS:SP_WARSH;
+    document.getElementById('surahSel').innerHTML=
+      '<option value="">— اختر سورة —</option>'+
+      surahs.map((s,i)=>`<option value="${SP[i]||1}">${s.number}. ${s.name}</option>`).join('');
+  }
+  stopAudio();
+  go(0);
+}
+
 function changeRec(){rec=document.getElementById('recSel').value;stopAudio();}
-function zoom(d){zm=Math.max(50,Math.min(200,zm+d));document.getElementById('zmLbl').textContent=zm+'%';const img=document.getElementById('mushafImg');img.style.maxWidth=`min(${zm*5.8}px,95vw)`;}
+
+function zoom(d){
+  zm=Math.max(50,Math.min(200,zm+d));
+  document.getElementById('zmLbl').textContent=zm+'%';
+  applyZoom();
+}
 
 async function toggleAudio(){
   if(playing){stopAudio();return;}
@@ -257,8 +314,7 @@ async function toggleAudio(){
     const r=await fetch(`https://api.alquran.cloud/v1/page/${pg}/${rec}`);
     const d=await r.json();
     const ayahs=(d.data?.ayahs||[]).filter(a=>a.audio);
-    if(ayahs.length) playSeq(ayahs,0);
-    else playFallback();
+    if(ayahs.length){playSeq(ayahs,0);}else{playFallback();}
   }catch(e){playFallback();}
 }
 
@@ -266,29 +322,30 @@ function playSeq(ayahs,i){
   if(i>=ayahs.length){stopAudio();return;}
   playing=true;
   document.getElementById('playIco').className='fas fa-pause';
-  document.getElementById('playBtn').classList.add('playing');
-  audio=new Audio(ayahs[i].audio);
-  audio.play();
-  audio.onended=()=>playSeq(ayahs,i+1);
-  audio.onerror=()=>playSeq(ayahs,i+1);
+  document.getElementById('playBtn').classList.add('on');
+  aud=new Audio(ayahs[i].audio);
+  aud.play();
+  aud.onended=()=>playSeq(ayahs,i+1);
+  aud.onerror=()=>playSeq(ayahs,i+1);
 }
 
 function playFallback(){
+  const SP=ed==='hafs'?SP_HAFS:SP_WARSH;
   let si=0;
   for(let i=SP.length-1;i>=0;i--){if(pg>=(SP[i]||1)){si=i;break;}}
   const url=`https://cdn.islamic.network/quran/audio-surah/128/${rec}/${si+1}.mp3`;
-  audio=new Audio(url);audio.play();
+  aud=new Audio(url);aud.play();
   playing=true;
   document.getElementById('playIco').className='fas fa-pause';
-  document.getElementById('playBtn').classList.add('playing');
-  audio.onended=stopAudio;
+  document.getElementById('playBtn').classList.add('on');
+  aud.onended=stopAudio;
 }
 
 function stopAudio(){
-  if(audio){audio.pause();audio=null;}
+  if(aud){aud.pause();aud=null;}
   playing=false;
   document.getElementById('playIco').className='fas fa-play';
-  document.getElementById('playBtn').classList.remove('playing');
+  document.getElementById('playBtn').classList.remove('on');
 }
 
 function setupTouch(){
@@ -302,30 +359,6 @@ function setupTouch(){
     if(e.key==='ArrowRight')go(1);
     if(e.key==='ArrowLeft')go(-1);
   });
-}
-
-function showTextFallback(){
-  const img=document.getElementById('mushafImg');
-  img.style.display='none';
-  document.getElementById('spinner').style.display='none';
-  // Show API-based text version instead
-  document.getElementById('errBox').innerHTML = `
-    <i class="fas fa-info-circle" style="color:var(--gold);font-size:2rem;margin-bottom:12px;display:block;"></i>
-    <h3 style="font-family:'Amiri',serif;font-size:1.3rem;margin-bottom:8px;">تعذّر تحميل صورة الصفحة</h3>
-    <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.7;margin-bottom:16px;">
-      مصادر الصور محجوبة في منطقتك.<br>
-      يمكنك استخدام تطبيق المصحف المباشر:
-    </p>
-    <a href="https://quran.com/ar/${pg}" target="_blank" 
-       style="background:var(--gold);color:var(--green-dark);border:none;padding:10px 22px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin:4px;">
-      📖 افتح في Quran.com
-    </a>
-    <a href="https://www.mushaf.app" target="_blank"
-       style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:10px 22px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin:4px;">
-      📱 تطبيق المصحف
-    </a>
-  `;
-  document.getElementById('errBox').style.display='block';
 }
 </script>
 </body>
