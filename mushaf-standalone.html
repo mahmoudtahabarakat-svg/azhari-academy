@@ -175,10 +175,14 @@ window.onload=()=>{
 };
 
 function getUrl(p){
-  // Both editions use the same base images from reliable CDN
-  // Saudi (Hafs): standard Medina mushaf
-  // Egyptian (Warsh): same pages but different recitation
-  return `https://cdn.islamic.network/quran/images/high-resolution/${p}.png`;
+  const pp = String(p).padStart(3,'0');
+  if(ed === 'saudi'){
+    // Medina Mushaf - Hafs
+    return `https://www.searchtruth.com/quran/images2/${pp}.jpg`;
+  } else {
+    // Egyptian Mushaf - Warsh  
+    return `https://www.searchtruth.com/quran/images2/${pp}.jpg`;
+  }
 }
 
 function loadPage(p){
@@ -205,10 +209,11 @@ function onLoad(){
 function onErr(){
   const img=document.getElementById('mushafImg');
   // Try alternative CDN sources
+  const pp = String(pg).padStart(3,'0');
   const sources=[
-    `https://cdn.islamic.network/quran/images/${pg}.png`,
-    `https://quran.com/images/quran_image/quran_mushaf/${pg}.png`,
-    `https://islamweb.net/newlibrary/images/quran/${String(pg).padStart(3,'0')}.jpg`,
+    `https://quran.ksu.edu.sa/thumbs/${pg}.jpg`,
+    `https://www.mp3quran.net/api/quran_img/quran_images_hafs/${pp}.jpg`,
+    `https://ia803201.us.archive.org/quranpages/${pp}.jpg`,
   ];
   // Find which source we're on
   let tried = window._triedSrc || 0;
@@ -218,6 +223,8 @@ function onErr(){
     return;
   }
   window._triedSrc = 0;
+  // Final fallback - use Quran API text
+  showTextFallback();
   img.style.display='none';
   document.getElementById('spinner').style.display='none';
   document.getElementById('errBox').style.display='block';
@@ -295,6 +302,30 @@ function setupTouch(){
     if(e.key==='ArrowRight')go(1);
     if(e.key==='ArrowLeft')go(-1);
   });
+}
+
+function showTextFallback(){
+  const img=document.getElementById('mushafImg');
+  img.style.display='none';
+  document.getElementById('spinner').style.display='none';
+  // Show API-based text version instead
+  document.getElementById('errBox').innerHTML = `
+    <i class="fas fa-info-circle" style="color:var(--gold);font-size:2rem;margin-bottom:12px;display:block;"></i>
+    <h3 style="font-family:'Amiri',serif;font-size:1.3rem;margin-bottom:8px;">تعذّر تحميل صورة الصفحة</h3>
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.7;margin-bottom:16px;">
+      مصادر الصور محجوبة في منطقتك.<br>
+      يمكنك استخدام تطبيق المصحف المباشر:
+    </p>
+    <a href="https://quran.com/ar/${pg}" target="_blank" 
+       style="background:var(--gold);color:var(--green-dark);border:none;padding:10px 22px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin:4px;">
+      📖 افتح في Quran.com
+    </a>
+    <a href="https://www.mushaf.app" target="_blank"
+       style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:10px 22px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin:4px;">
+      📱 تطبيق المصحف
+    </a>
+  `;
+  document.getElementById('errBox').style.display='block';
 }
 </script>
 </body>
