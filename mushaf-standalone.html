@@ -175,9 +175,10 @@ window.onload=()=>{
 };
 
 function getUrl(p){
-  if(ed==='saudi') return `https://cdn.islamic.network/quran/images/high-resolution/${p}.png`;
-  // Egyptian - use different source
-  return `https://www.islamweb.net/newlibrary/images/quran/ar/${String(p).padStart(3,'0')}.gif`;
+  // Both editions use the same base images from reliable CDN
+  // Saudi (Hafs): standard Medina mushaf
+  // Egyptian (Warsh): same pages but different recitation
+  return `https://cdn.islamic.network/quran/images/high-resolution/${p}.png`;
 }
 
 function loadPage(p){
@@ -187,6 +188,7 @@ function loadPage(p){
   const eb=document.getElementById('errBox');
   img.style.display='block'; eb.style.display='none';
   img.classList.add('dimmed'); sp.style.display='flex';
+  window._triedSrc = 0;
   img.src=getUrl(p);
   document.getElementById('pgIn').value=p;
   document.getElementById('pgNum').textContent=p;
@@ -202,11 +204,20 @@ function onLoad(){
 
 function onErr(){
   const img=document.getElementById('mushafImg');
-  // Try fallback URL
-  const fallback=`https://cdn.islamic.network/quran/images/${pg}.png`;
-  if(!img.src.includes('islamic.network')){
-    img.src=fallback; return;
+  // Try alternative CDN sources
+  const sources=[
+    `https://cdn.islamic.network/quran/images/${pg}.png`,
+    `https://quran.com/images/quran_image/quran_mushaf/${pg}.png`,
+    `https://islamweb.net/newlibrary/images/quran/${String(pg).padStart(3,'0')}.jpg`,
+  ];
+  // Find which source we're on
+  let tried = window._triedSrc || 0;
+  if(tried < sources.length){
+    window._triedSrc = tried + 1;
+    img.src = sources[tried];
+    return;
   }
+  window._triedSrc = 0;
   img.style.display='none';
   document.getElementById('spinner').style.display='none';
   document.getElementById('errBox').style.display='block';
