@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مواقيت الصلاة والتقويم | أكاديمية المعلم الأزهري</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--green:#1B5E3B;--green-dark:#0F3D26;--green-light:#2D7A52;--gold:#C9A84C;--gold-light:#E2C47A;--cream:#FAF7F0;--cream-dark:#F0EAD8;--charcoal:#1A1A2E;--text-muted:#6B7280;--white:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(15,61,38,0.97);height:65px;border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 3%;}
+.nav-logo{font-family:'Amiri',serif;font-size:1.1rem;color:var(--gold);text-decoration:none;}
+.nav-links{display:flex;gap:2px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.78rem;padding:5px 8px;border-radius:6px;transition:all 0.3s;}
+.nav-links a:hover,.nav-links a.active{background:rgba(201,168,76,0.2);color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--green-dark);padding:7px 14px;border-radius:50px;font-weight:700;font-size:0.78rem;text-decoration:none;}
+
+.page-wrap{padding:80px 3% 40px;}
+
+/* ─── HERO CLOCK ─── */
+.hero-clock{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:24px;padding:32px 24px;text-align:center;margin-bottom:24px;position:relative;overflow:hidden;}
+.hero-clock::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C9A84C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.current-time{font-family:'Amiri',serif;font-size:clamp(2.5rem,8vw,4rem);color:#fff;font-weight:700;letter-spacing:2px;}
+.current-date-ar{font-family:'Amiri',serif;font-size:1.1rem;color:var(--gold);margin:6px 0;}
+.current-date-hijri{font-size:0.9rem;color:rgba(255,255,255,0.7);margin-bottom:16px;}
+.location-bar{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.1);border-radius:50px;padding:8px 20px;margin:0 auto;max-width:300px;cursor:pointer;transition:all 0.3s;}
+.location-bar:hover{background:rgba(255,255,255,0.2);}
+.location-bar span{color:rgba(255,255,255,0.85);font-size:0.85rem;}
+.location-bar i{color:var(--gold);}
+
+/* ─── NEXT PRAYER ─── */
+.next-prayer-box{background:var(--gold);border-radius:18px;padding:18px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.next-prayer-box .label{font-size:0.82rem;color:var(--green-dark);font-weight:600;}
+.next-prayer-box .name{font-family:'Amiri',serif;font-size:1.6rem;color:var(--green-dark);font-weight:700;}
+.next-prayer-box .countdown{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);font-weight:700;background:rgba(255,255,255,0.4);padding:8px 18px;border-radius:50px;}
+
+/* ─── PRAYER TIMES ─── */
+.prayers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:28px;}
+.prayer-card{background:var(--white);border-radius:18px;padding:18px;text-align:center;border:2px solid transparent;transition:all 0.3s;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.prayer-card.active{border-color:var(--green);background:#E8F5E9;transform:translateY(-4px);box-shadow:0 8px 24px rgba(27,94,59,0.15);}
+.prayer-card.passed{opacity:0.55;}
+.prayer-icon{font-size:1.8rem;margin-bottom:8px;}
+.prayer-name-ar{font-family:'Amiri',serif;font-size:1.1rem;color:var(--charcoal);margin-bottom:2px;}
+.prayer-name-en{font-size:0.72rem;color:var(--text-muted);margin-bottom:8px;}
+.prayer-time{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green);font-weight:700;}
+.prayer-card.active .prayer-time{color:var(--green-dark);}
+
+/* ─── SETTINGS ─── */
+.settings-bar{background:var(--white);border-radius:16px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.setting-item{display:flex;flex-direction:column;gap:5px;}
+.setting-item label{font-size:0.75rem;color:var(--text-muted);font-weight:600;}
+select.s-sel{padding:7px 12px;border-radius:10px;border:1px solid var(--cream-dark);font-family:'Tajawal',sans-serif;font-size:0.82rem;background:var(--cream);color:var(--charcoal);outline:none;cursor:pointer;}
+
+/* ─── TABS ─── */
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tab-btn{padding:9px 20px;border-radius:50px;border:2px solid var(--cream-dark);background:var(--white);font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:6px;}
+.tab-btn:hover{border-color:var(--green);color:var(--green);}
+.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* ─── ISLAMIC CALENDAR ─── */
+.calendar-wrap{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.cal-header{background:linear-gradient(135deg,var(--green-dark),var(--green));padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.cal-header h3{font-family:'Amiri',serif;font-size:1.3rem;color:#fff;}
+.cal-header p{font-size:0.82rem;color:rgba(255,255,255,0.7);}
+.cal-nav{display:flex;gap:8px;}
+.cal-nav button{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;cursor:pointer;font-size:0.9rem;transition:all 0.3s;}
+.cal-nav button:hover{background:var(--gold);color:var(--green-dark);}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);background:var(--cream);padding:10px 16px;}
+.cal-days-header span{text-align:center;font-size:0.75rem;font-weight:700;color:var(--text-muted);}
+.cal-days-header span.friday{color:var(--green);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:10px 16px 16px;}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;transition:all 0.2s;position:relative;}
+.cal-day:hover{background:var(--cream);}
+.cal-day.today{background:var(--green);color:#fff;}
+.cal-day.today .greg{color:rgba(255,255,255,0.8);}
+.cal-day.today .hijri-d{color:var(--gold-light);}
+.cal-day.friday .greg{color:var(--green);}
+.cal-day.has-event::after{content:'';position:absolute;bottom:3px;width:5px;height:5px;border-radius:50%;background:var(--gold);}
+.cal-day.today.has-event::after{background:#fff;}
+.cal-day.other-month{opacity:0.3;}
+.greg{font-size:0.9rem;font-weight:700;line-height:1;}
+.hijri-d{font-size:0.65rem;color:var(--text-muted);font-family:'Amiri',serif;}
+.cal-day.today .greg{color:#fff;}
+
+/* ─── EVENTS ─── */
+.events-section{margin-top:24px;}
+.events-title{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.event-card{background:var(--white);border-radius:14px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,0.04);border-right:4px solid var(--green);}
+.event-date-box{text-align:center;min-width:50px;}
+.event-date-box .ed{font-family:'Amiri',serif;font-size:1.5rem;color:var(--green);font-weight:700;line-height:1;}
+.event-date-box .em{font-size:0.72rem;color:var(--text-muted);}
+.event-info h4{font-size:0.95rem;font-weight:700;margin-bottom:3px;}
+.event-info p{font-size:0.8rem;color:var(--text-muted);}
+.event-badge{padding:4px 12px;border-radius:50px;font-size:0.72rem;font-weight:700;margin-right:auto;}
+.badge-green{background:#E8F5E9;color:var(--green);}
+.badge-gold{background:#FFF8E1;color:#F57F17;}
+
+/* ─── QIBLA ─── */
+.qibla-wrap{background:var(--white);border-radius:20px;padding:28px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.qibla-compass{width:200px;height:200px;border-radius:50%;border:6px solid var(--green);margin:0 auto 20px;position:relative;background:radial-gradient(circle,#E8F5E9,#fff);display:flex;align-items:center;justify-content:center;}
+.compass-needle{width:4px;height:80px;background:linear-gradient(to top,var(--green) 50%,#C62828 50%);border-radius:2px;transform-origin:bottom center;position:absolute;bottom:50%;transition:transform 1s ease;}
+.compass-n{position:absolute;top:8px;font-size:0.8rem;font-weight:700;color:var(--text-muted);}
+.compass-s{position:absolute;bottom:8px;font-size:0.8rem;font-weight:700;color:var(--text-muted);}
+.compass-e{position:absolute;right:8px;font-size:0.8rem;font-weight:700;color:var(--text-muted);}
+.compass-w{position:absolute;left:8px;font-size:0.8rem;font-weight:700;color:var(--text-muted);}
+.kaaba-icon{font-size:2rem;position:absolute;}
+.qibla-degree{font-family:'Amiri',serif;font-size:2rem;color:var(--green);font-weight:700;margin-bottom:6px;}
+.qibla-info{color:var(--text-muted);font-size:0.88rem;}
+
+/* ─── DHIKR ─── */
+.dhikr-wrap{background:var(--white);border-radius:20px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.dhikr-text{font-family:'Amiri',serif;font-size:1.8rem;text-align:center;color:var(--charcoal);line-height:2;margin:20px 0;background:var(--cream);border-radius:14px;padding:20px;}
+.dhikr-meaning{text-align:center;color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;}
+.dhikr-counter{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.counter-circle{width:120px;height:120px;border-radius:50%;border:6px solid var(--green);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;background:var(--cream);user-select:none;}
+.counter-circle:active{transform:scale(0.93);background:#E8F5E9;}
+.counter-num{font-family:'Amiri',serif;font-size:2.5rem;color:var(--green);font-weight:700;}
+.counter-target{font-size:0.8rem;color:var(--text-muted);}
+.dhikr-btns{display:flex;gap:10px;}
+.dhikr-btn{padding:9px 20px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;font-size:0.85rem;transition:all 0.3s;}
+.dhikr-prev{background:var(--cream);color:var(--charcoal);}
+.dhikr-next{background:var(--green);color:#fff;}
+.dhikr-reset{background:#FFEBEE;color:#C62828;}
+
+.wa-float{position:fixed;bottom:22px;left:22px;z-index:999;width:50px;height:50px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.4);}
+
+@media(max-width:600px){.nav-links{display:none;}.prayers-grid{grid-template-columns:repeat(3,1fr);}.settings-bar{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index-standalone.html" class="nav-logo">📖 أكاديمية المعلم الأزهري</a>
+  <ul class="nav-links">
+    <li><a href="index-standalone.html">الرئيسية</a></li>
+    <li><a href="mushaf-standalone.html">المصحف</a></li>
+    <li><a href="prayer-standalone.html" class="active">الصلاة والتقويم</a></li>
+    <li><a href="stories-standalone.html">القصص</a></li>
+    <li><a href="kids-standalone.html">الأطفال</a></li>
+    <li><a href="quiz-standalone.html">مسابقات</a></li>
+  </ul>
+  <a href="index-standalone.html#inquiry" class="nav-cta">حصة مجانية 🎁</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO CLOCK -->
+  <div class="hero-clock">
+    <div class="current-time" id="currentTime">00:00:00</div>
+    <div class="current-date-ar" id="currentDateAr"></div>
+    <div class="current-date-hijri" id="currentDateHijri"></div>
+    <div class="location-bar" onclick="getLocation()">
+      <i class="fas fa-map-marker-alt"></i>
+      <span id="locationName">اضغط لتحديد موقعك 📍</span>
+    </div>
+  </div>
+
+  <!-- NEXT PRAYER -->
+  <div class="next-prayer-box" id="nextPrayerBox" style="display:none;">
+    <div>
+      <div class="label">الصلاة القادمة</div>
+      <div class="name" id="nextPrayerName">الفجر</div>
+    </div>
+    <div class="countdown" id="prayerCountdown">--:--:--</div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="settings-bar">
+    <div class="setting-item">
+      <label>طريقة الحساب</label>
+      <select class="s-sel" id="methodSel" onchange="fetchPrayerTimes()">
+        <option value="5">مصر (وزارة الأوقاف)</option>
+        <option value="4">أم القرى — السعودية</option>
+        <option value="3">MWL — رابطة العالم الإسلامي</option>
+        <option value="2">ISNA — أمريكا الشمالية</option>
+        <option value="1">University of Islamic Sciences, Karachi</option>
+      </select>
+    </div>
+    <div class="setting-item">
+      <label>المذهب</label>
+      <select class="s-sel" id="schoolSel" onchange="fetchPrayerTimes()">
+        <option value="0">الشافعي / المالكي / الحنبلي</option>
+        <option value="1">الحنفي</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PRAYER TIMES -->
+  <div class="prayers-grid" id="prayersGrid">
+    <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">
+      <i class="fas fa-map-marker-alt" style="font-size:2rem;color:var(--green);display:block;margin-bottom:12px;"></i>
+      اضغط على "تحديد موقعك" لعرض مواقيت الصلاة
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('calendar',this)"><i class="fas fa-calendar-alt"></i> التقويم</button>
+    <button class="tab-btn" onclick="showTab('qibla',this)"><i class="fas fa-mosque"></i> اتجاه القبلة</button>
+    <button class="tab-btn" onclick="showTab('dhikr',this)"><i class="fas fa-hands"></i> السبحة الإلكترونية</button>
+  </div>
+
+  <!-- CALENDAR TAB -->
+  <div id="tab-calendar">
+    <div class="calendar-wrap">
+      <div class="cal-header">
+        <div>
+          <h3 id="calMonthYear"></h3>
+          <p id="calHijriMonth"></p>
+        </div>
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)"><i class="fas fa-chevron-right"></i></button>
+          <button onclick="changeMonth(1)"><i class="fas fa-chevron-left"></i></button>
+        </div>
+      </div>
+      <div class="cal-days-header">
+        <span class="friday">ج</span><span>س</span><span>ح</span><span>ن</span><span>ث</span><span>ر</span><span>خ</span>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <div class="events-section">
+      <div class="events-title"><i class="fas fa-star" style="color:var(--gold);"></i> المناسبات الإسلامية ١٤٤٦ هـ</div>
+      <div id="eventsList"></div>
+    </div>
+  </div>
+
+  <!-- QIBLA TAB -->
+  <div id="tab-qibla" style="display:none;">
+    <div class="qibla-wrap">
+      <h3 style="font-family:'Amiri',serif;font-size:1.4rem;color:var(--green);margin-bottom:6px;">🕌 اتجاه القبلة</h3>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:20px;">Qibla Direction — اتجاه الكعبة المشرفة من موقعك</p>
+      <div class="qibla-compass" id="qiblaCompass">
+        <span class="compass-n">N</span>
+        <span class="compass-s">S</span>
+        <span class="compass-e">E</span>
+        <span class="compass-w">W</span>
+        <div class="compass-needle" id="compassNeedle"></div>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+          <span style="font-size:1.5rem;">🕋</span>
+        </div>
+      </div>
+      <div class="qibla-degree" id="qiblaDeg">---°</div>
+      <div class="qibla-info" id="qiblaInfo">اضغط لتحديد موقعك أولاً</div>
+      <button onclick="getLocation()" style="margin-top:16px;background:var(--green);color:#fff;border:none;padding:11px 26px;border-radius:50px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;font-size:0.9rem;">
+        <i class="fas fa-map-marker-alt"></i> تحديد موقعي
+      </button>
+    </div>
+  </div>
+
+  <!-- DHIKR TAB -->
+  <div id="tab-dhikr" style="display:none;">
+    <div class="dhikr-wrap">
+      <h3 style="font-family:'Amiri',serif;font-size:1.4rem;color:var(--green);margin-bottom:6px;text-align:center;">📿 السبحة الإلكترونية</h3>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:6px;text-align:center;">Digital Tasbih Counter</p>
+
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;">
+        <select id="dhikrSel" onchange="loadDhikr()" style="padding:8px 14px;border-radius:50px;border:2px solid var(--cream-dark);font-family:'Tajawal',sans-serif;font-size:0.85rem;background:var(--cream);outline:none;">
+          <option value="0">سبحان الله</option>
+          <option value="1">الحمد لله</option>
+          <option value="2">الله أكبر</option>
+          <option value="3">لا إله إلا الله</option>
+          <option value="4">استغفر الله</option>
+          <option value="5">لا حول ولا قوة إلا بالله</option>
+          <option value="6">سبحان الله وبحمده</option>
+          <option value="7">سبحان الله العظيم</option>
+          <option value="8">اللهم صلِّ على محمد</option>
+        </select>
+      </div>
+
+      <div class="dhikr-text" id="dhikrText"></div>
+      <div class="dhikr-meaning" id="dhikrMeaning"></div>
+
+      <div class="dhikr-counter">
+        <div class="counter-circle" onclick="countDhikr()" id="counterCircle">
+          <span class="counter-num" id="counterNum">0</span>
+        </div>
+        <div class="counter-target" id="counterTarget"></div>
+        <div class="dhikr-btns">
+          <button class="dhikr-btn dhikr-reset" onclick="resetCounter()">🔄 صفر</button>
+          <button class="dhikr-btn dhikr-next" onclick="nextDhikr()">التالي ←</button>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:var(--cream);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px;">المجموع الكلي اليوم</div>
+        <div style="font-family:'Amiri',serif;font-size:2rem;color:var(--green);" id="totalCount">0</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<a href="https://wa.me/201002798497" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+// ─── STATE ───
+let userLat=null, userLng=null, userCity='';
+let prayerTimes={}, nextPrayer={};
+let calYear=new Date().getFullYear(), calMonth=new Date().getMonth();
+let dhikrCount=0, totalDhikrCount=0;
+let currentDhikrIdx=0;
+
+const PRAYERS=[
+  {name:'الفجر',nameEn:'Fajr',key:'Fajr',icon:'🌙'},
+  {name:'الشروق',nameEn:'Sunrise',key:'Sunrise',icon:'🌅'},
+  {name:'الظهر',nameEn:'Dhuhr',key:'Dhuhr',icon:'☀️'},
+  {name:'العصر',nameEn:'Asr',key:'Asr',icon:'🌤️'},
+  {name:'المغرب',nameEn:'Maghrib',key:'Maghrib',icon:'🌇'},
+  {name:'العشاء',nameEn:'Isha',key:'Isha',icon:'🌃'},
+];
+
+const DHIKRS=[
+  {text:'سُبْحَانَ اللَّهِ',meaning:'Glory be to Allah',target:33},
+  {text:'الْحَمْدُ لِلَّهِ',meaning:'All praise is due to Allah',target:33},
+  {text:'اللَّهُ أَكْبَرُ',meaning:'Allah is the Greatest',target:33},
+  {text:'لَا إِلَٰهَ إِلَّا اللَّهُ',meaning:'There is no god but Allah',target:100},
+  {text:'أَسْتَغْفِرُ اللَّهَ',meaning:'I seek forgiveness from Allah',target:100},
+  {text:'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',meaning:'There is no power except with Allah',target:33},
+  {text:'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',meaning:'Glory and praise be to Allah',target:100},
+  {text:'سُبْحَانَ اللَّهِ الْعَظِيمِ',meaning:'Glory be to Allah the Almighty',target:33},
+  {text:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ',meaning:'O Allah, send blessings upon Muhammad',target:100},
+];
+
+const ISLAMIC_EVENTS=[
+  {month:1,day:1,name:'رأس السنة الهجرية',nameEn:"Islamic New Year",badge:'badge-green'},
+  {month:1,day:10,name:'يوم عاشوراء',nameEn:"Day of Ashura",badge:'badge-gold'},
+  {month:3,day:12,name:'المولد النبوي الشريف',nameEn:"Prophet's Birthday",badge:'badge-green'},
+  {month:7,day:27,name:'ليلة الإسراء والمعراج',nameEn:"Night of Isra & Mi'raj",badge:'badge-gold'},
+  {month:8,day:15,name:'ليلة النصف من شعبان',nameEn:"Mid-Sha'ban",badge:'badge-gold'},
+  {month:9,day:1,name:'بداية رمضان المبارك',nameEn:"Start of Ramadan",badge:'badge-green'},
+  {month:9,day:27,name:'ليلة القدر المرتقبة',nameEn:"Laylat al-Qadr",badge:'badge-gold'},
+  {month:10,day:1,name:'عيد الفطر المبارك 🎉',nameEn:"Eid al-Fitr",badge:'badge-green'},
+  {month:12,day:9,name:'يوم عرفة',nameEn:"Day of Arafah",badge:'badge-gold'},
+  {month:12,day:10,name:'عيد الأضحى المبارك 🎉',nameEn:"Eid al-Adha",badge:'badge-green'},
+];
+
+const HIJRI_MONTHS=['محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+const GREG_MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const DAYS_AR=['الجمعة','السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+
+// ─── INIT ───
+window.onload=()=>{
+  updateClock();
+  setInterval(updateClock,1000);
+  buildCalendar();
+  renderEvents();
+  loadDhikr();
+  // Try auto-location
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      userLat=pos.coords.latitude;
+      userLng=pos.coords.longitude;
+      fetchPrayerTimes();
+      fetchCityName();
+      calcQibla();
+    },()=>{
+      document.getElementById('locationName').textContent='اضغط لتحديد موقعك يدوياً 📍';
+    });
+  }
+};
+
+// ─── CLOCK ───
+function updateClock(){
+  const now=new Date();
+  const h=String(now.getHours()).padStart(2,'0');
+  const m=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('currentTime').textContent=`${h}:${m}:${s}`;
+  
+  const days=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  document.getElementById('currentDateAr').textContent=
+    `${days[now.getDay()]} — ${now.getDate()} ${GREG_MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+  
+  // Hijri date
+  const hijri=toHijri(now.getFullYear(),now.getMonth()+1,now.getDate());
+  document.getElementById('currentDateHijri').textContent=
+    `${hijri.day} ${HIJRI_MONTHS[hijri.month-1]} ${hijri.year} هـ`;
+  
+  // Update prayer countdown
+  updateCountdown(now);
+}
+
+// ─── LOCATION ───
+function getLocation(){
+  document.getElementById('locationName').textContent='جاري التحديد...';
+  if(!navigator.geolocation){
+    alert('متصفحك لا يدعم تحديد الموقع');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    userLat=pos.coords.latitude;
+    userLng=pos.coords.longitude;
+    fetchPrayerTimes();
+    fetchCityName();
+    calcQibla();
+  },err=>{
+    document.getElementById('locationName').textContent='تعذّر التحديد — حاول مرة أخرى';
+  },{enableHighAccuracy:true,timeout:10000});
+}
+
+async function fetchCityName(){
+  try{
+    const r=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${userLat}&lon=${userLng}&format=json&accept-language=ar`);
+    const d=await r.json();
+    const city=d.address?.city||d.address?.town||d.address?.village||d.address?.county||'';
+    const country=d.address?.country||'';
+    userCity=`${city}، ${country}`;
+    document.getElementById('locationName').textContent=userCity;
+  }catch(e){
+    document.getElementById('locationName').textContent=`${userLat.toFixed(2)}°، ${userLng.toFixed(2)}°`;
+  }
+}
+
+// ─── PRAYER TIMES ───
+async function fetchPrayerTimes(){
+  if(!userLat||!userLng) return;
+  const method=document.getElementById('methodSel').value;
+  const school=document.getElementById('schoolSel').value;
+  const now=new Date();
+  const date=`${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`;
+  try{
+    const r=await fetch(`https://api.aladhan.com/v1/timings/${date}?latitude=${userLat}&longitude=${userLng}&method=${method}&school=${school}`);
+    const d=await r.json();
+    prayerTimes=d.data.timings;
+    renderPrayerCards();
+    document.getElementById('nextPrayerBox').style.display='flex';
+  }catch(e){
+    console.error('Prayer times error:',e);
+  }
+}
+
+function renderPrayerCards(){
+  const now=new Date();
+  const nowMin=now.getHours()*60+now.getMinutes();
+  
+  let nextIdx=-1, nextMin=Infinity;
+  
+  document.getElementById('prayersGrid').innerHTML=PRAYERS.map((p,i)=>{
+    const timeStr=prayerTimes[p.key]||'--:--';
+    const [ph,pm]=timeStr.split(':').map(Number);
+    const pMin=ph*60+pm;
+    const passed=pMin<nowMin;
+    const isNext=!passed&&pMin<nextMin;
+    if(isNext){nextMin=pMin;nextIdx=i;nextPrayer={name:p.name,time:timeStr,min:pMin};}
+    const active=!passed&&nextIdx===i;
+    return `
+      <div class="prayer-card ${passed?'passed':''}" id="pc-${i}">
+        <div class="prayer-icon">${p.icon}</div>
+        <div class="prayer-name-ar">${p.name}</div>
+        <div class="prayer-name-en">${p.nameEn}</div>
+        <div class="prayer-time">${timeStr}</div>
+      </div>`;
+  }).join('');
+  
+  // Mark active
+  if(nextIdx>=0){
+    const el=document.getElementById(`pc-${nextIdx}`);
+    if(el) el.classList.add('active');
+    document.getElementById('nextPrayerName').textContent=PRAYERS[nextIdx].name;
+  }
+}
+
+function updateCountdown(now){
+  if(!nextPrayer.min) return;
+  const nowMin=now.getHours()*60+now.getMinutes();
+  const nowSec=now.getSeconds();
+  let diff=(nextPrayer.min-nowMin)*60-nowSec;
+  if(diff<0) diff+=24*3600;
+  const h=Math.floor(diff/3600);
+  const m=Math.floor((diff%3600)/60);
+  const s=diff%60;
+  document.getElementById('prayerCountdown').textContent=
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// ─── QIBLA ───
+function calcQibla(){
+  if(!userLat||!userLng) return;
+  const makkahLat=21.4225, makkahLng=39.8262;
+  const lat1=userLat*Math.PI/180;
+  const lat2=makkahLat*Math.PI/180;
+  const dLng=(makkahLng-userLng)*Math.PI/180;
+  const y=Math.sin(dLng)*Math.cos(lat2);
+  const x=Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLng);
+  let bearing=Math.atan2(y,x)*180/Math.PI;
+  bearing=(bearing+360)%360;
+  document.getElementById('qiblaDeg').textContent=Math.round(bearing)+'°';
+  document.getElementById('compassNeedle').style.transform=`rotate(${bearing}deg)`;
+  document.getElementById('qiblaInfo').textContent=
+    `القبلة تقع على بُعد ${Math.round(bearing)}° من الشمال • Qibla is ${Math.round(bearing)}° from North`;
+  
+  // Device orientation for live compass
+  if(window.DeviceOrientationEvent){
+    window.addEventListener('deviceorientationabsolute',e=>{
+      const alpha=e.alpha||0;
+      document.getElementById('compassNeedle').style.transform=`rotate(${bearing-alpha}deg)`;
+    });
+  }
+}
+
+// ─── CALENDAR ───
+function buildCalendar(){
+  const now=new Date();
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const today=now.getDate();
+  const isCurrentMonth=calYear===now.getFullYear()&&calMonth===now.getMonth();
+  
+  document.getElementById('calMonthYear').textContent=`${GREG_MONTHS[calMonth]} ${calYear}`;
+  
+  // Hijri for first of month
+  const hijri=toHijri(calYear,calMonth+1,1);
+  document.getElementById('calHijriMonth').textContent=`${hijri.day} ${HIJRI_MONTHS[hijri.month-1]} ${hijri.year} هـ`;
+  
+  // Adjust for RTL (Friday first)
+  const startOffset=(firstDay+1)%7;
+  
+  let html='';
+  // Empty cells
+  for(let i=0;i<startOffset;i++){
+    html+=`<div class="cal-day other-month"></div>`;
+  }
+  
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(calYear,calMonth,d);
+    const dow=date.getDay();
+    const isFriday=dow===5;
+    const isToday=isCurrentMonth&&d===today;
+    const hijriDay=toHijri(calYear,calMonth+1,d);
+    
+    html+=`<div class="cal-day ${isToday?'today':''} ${isFriday?'friday':''}" onclick="showDayInfo(${d})">
+      <span class="greg">${d}</span>
+      <span class="hijri-d">${hijriDay.day}</span>
+    </div>`;
+  }
+  
+  document.getElementById('calGrid').innerHTML=html;
+}
+
+function changeMonth(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  buildCalendar();
+}
+
+function showDayInfo(d){
+  const hijri=toHijri(calYear,calMonth+1,d);
+  const dateStr=`${d} ${GREG_MONTHS[calMonth]} ${calYear}م = ${hijri.day} ${HIJRI_MONTHS[hijri.month-1]} ${hijri.year}هـ`;
+  alert(`📅 ${dateStr}`);
+}
+
+function renderEvents(){
+  const events=ISLAMIC_EVENTS;
+  document.getElementById('eventsList').innerHTML=events.map(e=>`
+    <div class="event-card">
+      <div class="event-date-box">
+        <div class="ed">${e.day}</div>
+        <div class="em">${HIJRI_MONTHS[e.month-1]}</div>
+      </div>
+      <div class="event-info">
+        <h4>${e.name}</h4>
+        <p>${e.nameEn}</p>
+      </div>
+      <span class="event-badge ${e.badge}">${e.badge==='badge-green'?'مناسبة':'فضيلة'}</span>
+    </div>
+  `).join('');
+}
+
+// ─── HIJRI CONVERSION ───
+function toHijri(year,month,day){
+  const jd=Math.floor((1461*(year+4800+Math.floor((month-14)/12)))/4)+
+    Math.floor((367*(month-2-12*Math.floor((month-14)/12)))/12)-
+    Math.floor((3*Math.floor((year+4900+Math.floor((month-14)/12))/100))/4)+day-32075;
+  let l=jd-1948440+10632;
+  const n=Math.floor((l-1)/10631);
+  l=l-10631*n+354;
+  const j=(Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719))+(Math.floor(l/5670))*(Math.floor((43*l)/15238));
+  l=l-(Math.floor((30-j)/15))*(Math.floor((17719*j)/50))-(Math.floor(j/16))*(Math.floor((15238*j)/43))+29;
+  const hMonth=Math.floor((24*l)/709);
+  const hDay=l-Math.floor((709*hMonth)/24);
+  const hYear=30*n+j-30;
+  return{year:hYear,month:hMonth,day:hDay};
+}
+
+// ─── TABS ───
+function showTab(id,btn){
+  ['calendar','qibla','dhikr'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===id?'block':'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── DHIKR ───
+function loadDhikr(){
+  currentDhikrIdx=parseInt(document.getElementById('dhikrSel').value);
+  const d=DHIKRS[currentDhikrIdx];
+  document.getElementById('dhikrText').textContent=d.text;
+  document.getElementById('dhikrMeaning').textContent=d.meaning;
+  document.getElementById('counterTarget').textContent=`الهدف: ${d.target} مرة`;
+  dhikrCount=0;
+  document.getElementById('counterNum').textContent='0';
+  document.getElementById('counterCircle').style.background='var(--cream)';
+}
+
+function countDhikr(){
+  dhikrCount++;
+  totalDhikrCount++;
+  document.getElementById('counterNum').textContent=dhikrCount;
+  document.getElementById('totalCount').textContent=totalDhikrCount;
+  const target=DHIKRS[currentDhikrIdx].target;
+  const pct=Math.min(dhikrCount/target,1);
+  const circle=document.getElementById('counterCircle');
+  circle.style.background=`linear-gradient(135deg,#E8F5E9 ${(1-pct)*100}%,#1B5E3B ${pct*100}%)`;
+  circle.style.color=pct>0.5?'#fff':'var(--charcoal)';
+  if(dhikrCount===target){
+    setTimeout(()=>{
+      alert(`🎉 أحسنت! أتممت ${target} مرة من: ${DHIKRS[currentDhikrIdx].text}`);
+    },200);
+  }
+}
+
+function resetCounter(){dhikrCount=0;document.getElementById('counterNum').textContent='0';document.getElementById('counterCircle').style.background='var(--cream)';}
+
+function nextDhikr(){
+  currentDhikrIdx=(currentDhikrIdx+1)%DHIKRS.length;
+  document.getElementById('dhikrSel').value=currentDhikrIdx;
+  loadDhikr();
+}
+</script>
+</body>
+</html>
