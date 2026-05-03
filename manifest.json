@@ -1,0 +1,50 @@
+{
+  "name": "أكاديمية المعلم الأزهري",
+  "short_name": "الأزهري",
+  "description": "منصة تعليمية متخصصة في القرآن الكريم والعلوم الإسلامية",
+  "start_url": "/azhari-academy/index-standalone.html",
+  "scope": "/azhari-academy/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F3D26",
+  "theme_color": "#1B5E3B",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/mahmoudtahabarakat-svg/azhari-academy/main/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/mahmoudtahabarakat-svg/azhari-academy/main/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "religion"],
+  "shortcuts": [
+    {
+      "name": "المصحف الشريف",
+      "url": "/azhari-academy/mushaf-standalone.html",
+      "description": "اقرأ القرآن الكريم"
+    },
+    {
+      "name": "ركن الأطفال",
+      "url": "/azhari-academy/kids-standalone.html",
+      "description": "ألعاب وأنشطة للأطفال"
+    },
+    {
+      "name": "القصص الإسلامية",
+      "url": "/azhari-academy/stories-standalone.html",
+      "description": "قصص الأنبياء والصحابة"
+    },
+    {
+      "name": "المسابقات",
+      "url": "/azhari-academy/quiz-standalone.html",
+      "description": "من سيربح المليون"
+    }
+  ]
+}
