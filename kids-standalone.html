@@ -201,12 +201,12 @@ body { background: linear-gradient(135deg, #E8F5E9 0%, #E3F2FD 50%, #FFF8E1 100%
 .word-chip { padding: 6px 16px; background: var(--cream); border-radius: 50px; font-family: 'Amiri', serif; font-size: 1rem; border: 2px solid var(--cream-dark); transition: all 0.3s; }
 .word-chip.found { background: var(--green); color: #fff; border-color: var(--green); text-decoration: line-through; }
 .ws-grid { display: grid; gap: 4px; margin: 0 auto; justify-content: center; }
-.ws-cell { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 1.1rem; border-radius: 8px; cursor: pointer; user-select: none; transition: all 0.2s; background: var(--cream); border: 2px solid transparent; }
+.ws-cell { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 1rem; border-radius: 8px; cursor: pointer; user-select: none; transition: all 0.2s; background: var(--cream); border: 2px solid transparent; }
 .ws-cell:hover { background: #E8F5E9; border-color: var(--green); }
 .ws-cell.selected { background: var(--gold); color: var(--green-dark); }
 .ws-cell.found { background: var(--green); color: #fff; }
 
-@media(max-width:600px){ .options-grid{grid-template-columns:1fr;} .ws-cell{width:28px;height:28px;font-size:0.85rem;} }
+@media(max-width:600px){ .options-grid{grid-template-columns:1fr;} .ws-cell{width:26px;height:26px;font-size:0.78rem;} }
 </style>
 
 <!-- Google Analytics -->
@@ -581,23 +581,56 @@ function revealPuzzle(i, btn) {
 // ─── WORD SEARCH ───
 let wsBuilt = false, wsSelected = [], wsFound = [];
 const WS_WORDS = ['نوح','موسى','عيسى','ادم','يوسف','ابراهيم'];
-const WS_SIZE = 8;
+const WS_SIZE = 10;
 let wsGrid = [];
 function buildWordSearch() {
   wsBuilt = true;
-  wsGrid = Array.from({length:WS_SIZE}, () => Array(WS_SIZE).fill(''));
+  // حاول البناء حتى تُوضع جميع الكلمات
+  let attempts = 0;
+  do {
+    wsGrid = Array.from({length:WS_SIZE}, () => Array(WS_SIZE).fill(''));
+    attempts++;
+  } while (!tryPlaceAll() && attempts < 20);
+
   const letters = 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي';
-  WS_WORDS.forEach(w => placeWord(w));
   for (let r=0;r<WS_SIZE;r++) for (let c=0;c<WS_SIZE;c++) if (!wsGrid[r][c]) wsGrid[r][c] = letters[Math.floor(Math.random()*letters.length)];
   renderWS();
 }
-function placeWord(word) {
-  const chars = word.split('').reverse();
-  for (let t=0;t<100;t++) {
-    const r = Math.floor(Math.random()*WS_SIZE);
-    const c = Math.floor(Math.random()*(WS_SIZE-chars.length));
-    if (chars.every((_,i) => !wsGrid[r][c+i])) { chars.forEach((ch,i) => wsGrid[r][c+i]=ch); return; }
+function tryPlaceAll() {
+  const tempGrid = Array.from({length:WS_SIZE}, () => Array(WS_SIZE).fill(''));
+  for (const word of WS_WORDS) {
+    if (!placeWord(word, tempGrid)) return false;
   }
+  // نجح الوضع — انسخ إلى wsGrid
+  for (let r=0;r<WS_SIZE;r++) for (let c=0;c<WS_SIZE;c++) wsGrid[r][c] = tempGrid[r][c];
+  return true;
+}
+function placeWord(word, grid) {
+  // الكلمة العربية تُكتب من اليمين لليسار، نعكسها لحفظها في الخلايا بالترتيب الصحيح
+  const chars = word.split('').reverse();
+  const len = chars.length;
+  // جرّب الاتجاهين: أفقي وعمودي
+  const directions = Math.random() < 0.5 ? ['h','v'] : ['v','h'];
+  for (const dir of directions) {
+    for (let t = 0; t < 150; t++) {
+      if (dir === 'h') {
+        const r = Math.floor(Math.random() * WS_SIZE);
+        const c = Math.floor(Math.random() * (WS_SIZE - len + 1));
+        if (chars.every((_,i) => !grid[r][c+i])) {
+          chars.forEach((ch,i) => grid[r][c+i] = ch);
+          return true;
+        }
+      } else {
+        const r = Math.floor(Math.random() * (WS_SIZE - len + 1));
+        const c = Math.floor(Math.random() * WS_SIZE);
+        if (chars.every((_,i) => !grid[r+i][c])) {
+          chars.forEach((ch,i) => grid[r+i][c] = ch);
+          return true;
+        }
+      }
+    }
+  }
+  return false; // فشل الوضع
 }
 function renderWS() {
   const grid = document.getElementById('wsGrid');
@@ -608,7 +641,11 @@ function renderWS() {
 function selectCell(r,c) {
   const key = `${r}-${c}`;
   const el = document.getElementById(`ws-${r}-${c}`);
-  if (wsSelected.find(s=>s.key===key)) { wsSelected = wsSelected.filter(s=>s.key!==key); el.classList.remove('selected'); return; }
+  if (wsSelected.find(s=>s.key===key)) {
+    wsSelected = wsSelected.filter(s=>s.key!==key);
+    el.classList.remove('selected');
+    return;
+  }
   wsSelected.push({r,c,key,letter:wsGrid[r][c]});
   el.classList.add('selected');
   checkWord();
@@ -616,12 +653,21 @@ function selectCell(r,c) {
 function checkWord() {
   const sel = wsSelected;
   if (sel.length < 2) return;
-  const word = sel.map(s=>s.letter).join('');
+  // تحقق أن الخلايا المحددة على نفس الصف أو نفس العمود
+  const allSameRow = sel.every(s => s.r === sel[0].r);
+  const allSameCol = sel.every(s => s.c === sel[0].c);
+  if (!allSameRow && !allSameCol) return;
+  const sorted = [...sel].sort((a,b) => allSameRow ? a.c - b.c : a.r - b.r);
+  const word = sorted.map(s=>s.letter).join('');
   const wordRev = [...word].reverse().join('');
   const match = WS_WORDS.find(w => w === word || w === wordRev);
   if (match && !wsFound.includes(match)) {
     wsFound.push(match);
-    sel.forEach(s => { document.getElementById(`ws-${s.r}-${s.c}`).classList.replace('selected','found'); });
+    sel.forEach(s => {
+      const cell = document.getElementById(`ws-${s.r}-${s.c}`);
+      cell.classList.remove('selected');
+      cell.classList.add('found');
+    });
     document.getElementById(`chip-${match}`).classList.add('found');
     wsSelected = [];
     if (wsFound.length === WS_WORDS.length) document.getElementById('wsMessage').style.display = 'block';
