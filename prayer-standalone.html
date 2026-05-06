@@ -232,7 +232,7 @@ select.s-sel{padding:7px 12px;border-radius:10px;border:1px solid var(--cream-da
     </div>
 
     <div class="events-section">
-      <div class="events-title"><i class="fas fa-star" style="color:var(--gold);"></i> المناسبات الإسلامية ١٤٤٦ هـ</div>
+      <div class="events-title"><i class="fas fa-star" style="color:var(--gold);"></i> <span id="eventsTitle">المناسبات الإسلامية</span></div>
       <div id="eventsList"></div>
     </div>
   </div>
@@ -445,30 +445,43 @@ async function fetchPrayerTimes(){
 function renderPrayerCards(){
   const now=new Date();
   const nowMin=now.getHours()*60+now.getMinutes();
-  
+
+  // أولاً: احسب الصلاة القادمة في pass منفصلة
   let nextIdx=-1, nextMin=Infinity;
-  
+  PRAYERS.forEach((p,i)=>{
+    const timeStr=prayerTimes[p.key]||'--:--';
+    const [ph,pm]=timeStr.split(':').map(Number);
+    const pMin=ph*60+pm;
+    if(pMin>nowMin && pMin<nextMin){nextMin=pMin;nextIdx=i;nextPrayer={name:p.name,time:timeStr,min:pMin};}
+  });
+  // لو انتهت كل الصلوات اليوم → الصلاة القادمة هي الفجر (أقل وقت)
+  if(nextIdx===-1){
+    let minMin=Infinity;
+    PRAYERS.forEach((p,i)=>{
+      const timeStr=prayerTimes[p.key]||'--:--';
+      const [ph,pm]=timeStr.split(':').map(Number);
+      const pMin=ph*60+pm;
+      if(pMin<minMin){minMin=pMin;nextIdx=i;nextPrayer={name:p.name,time:timeStr,min:pMin};}
+    });
+  }
+
+  // ثانياً: ارسم الكروت
   document.getElementById('prayersGrid').innerHTML=PRAYERS.map((p,i)=>{
     const timeStr=prayerTimes[p.key]||'--:--';
     const [ph,pm]=timeStr.split(':').map(Number);
     const pMin=ph*60+pm;
-    const passed=pMin<nowMin;
-    const isNext=!passed&&pMin<nextMin;
-    if(isNext){nextMin=pMin;nextIdx=i;nextPrayer={name:p.name,time:timeStr,min:pMin};}
-    const active=!passed&&nextIdx===i;
+    const passed=pMin<=nowMin && i!==nextIdx;
+    const active=i===nextIdx;
     return `
-      <div class="prayer-card ${passed?'passed':''}" id="pc-${i}">
+      <div class="prayer-card ${active?'active':''} ${passed?'passed':''}" id="pc-${i}">
         <div class="prayer-icon">${p.icon}</div>
         <div class="prayer-name-ar">${p.name}</div>
         <div class="prayer-name-en">${p.nameEn}</div>
         <div class="prayer-time">${timeStr}</div>
       </div>`;
   }).join('');
-  
-  // Mark active
+
   if(nextIdx>=0){
-    const el=document.getElementById(`pc-${nextIdx}`);
-    if(el) el.classList.add('active');
     document.getElementById('nextPrayerName').textContent=PRAYERS[nextIdx].name;
   }
 }
@@ -525,8 +538,9 @@ function buildCalendar(){
   const hijri=toHijri(calYear,calMonth+1,1);
   document.getElementById('calHijriMonth').textContent=`${hijri.day} ${HIJRI_MONTHS[hijri.month-1]} ${hijri.year} هـ`;
   
-  // Adjust for RTL (Friday first)
-  const startOffset=(firstDay+1)%7;
+  // header: ج(5) س(6) ح(0) ن(1) ث(2) ر(3) خ(4)
+  // نحوّل firstDay (0=أحد) إلى offset بالنسبة للجمعة (5)
+  const startOffset=(firstDay-5+7)%7;
   
   let html='';
   // Empty cells
@@ -540,8 +554,9 @@ function buildCalendar(){
     const isFriday=dow===5;
     const isToday=isCurrentMonth&&d===today;
     const hijriDay=toHijri(calYear,calMonth+1,d);
-    
-    html+=`<div class="cal-day ${isToday?'today':''} ${isFriday?'friday':''}" onclick="showDayInfo(${d})">
+    const hasEvent=ISLAMIC_EVENTS.some(e=>e.month===hijriDay.month&&e.day===hijriDay.day);
+
+    html+=`<div class="cal-day ${isToday?'today':''} ${isFriday?'friday':''} ${hasEvent?'has-event':''}" onclick="showDayInfo(${d})">
       <span class="greg">${d}</span>
       <span class="hijri-d">${hijriDay.day}</span>
     </div>`;
@@ -560,12 +575,28 @@ function changeMonth(dir){
 function showDayInfo(d){
   const hijri=toHijri(calYear,calMonth+1,d);
   const dateStr=`${d} ${GREG_MONTHS[calMonth]} ${calYear}م = ${hijri.day} ${HIJRI_MONTHS[hijri.month-1]} ${hijri.year}هـ`;
-  alert(`📅 ${dateStr}`);
+  const event=ISLAMIC_EVENTS.find(e=>e.month===hijri.month&&e.day===hijri.day);
+  const eventStr=event?`\n🌟 ${event.name}`:'';
+  alert(`📅 ${dateStr}${eventStr}`);
 }
 
 function renderEvents(){
-  const events=ISLAMIC_EVENTS;
-  document.getElementById('eventsList').innerHTML=events.map(e=>`
+  const now=new Date();
+  const hijriNow=toHijri(now.getFullYear(),now.getMonth()+1,now.getDate());
+  const currentHijriYear=hijriNow.year;
+  document.getElementById('eventsTitle').textContent=`المناسبات الإسلامية ${currentHijriYear} هـ`;
+
+  // رتّب المناسبات: القادمة أولاً ثم الماضية
+  const nowVal=hijriNow.month*100+hijriNow.day;
+  const sorted=[...ISLAMIC_EVENTS].sort((a,b)=>{
+    const av=a.month*100+a.day, bv=b.month*100+b.day;
+    const aFut=av>=nowVal, bFut=bv>=nowVal;
+    if(aFut&&!bFut) return -1;
+    if(!aFut&&bFut) return 1;
+    return av-bv;
+  });
+
+  document.getElementById('eventsList').innerHTML=sorted.map(e=>`
     <div class="event-card">
       <div class="event-date-box">
         <div class="ed">${e.day}</div>
