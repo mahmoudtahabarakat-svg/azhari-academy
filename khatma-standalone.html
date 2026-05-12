@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ختمة القرآن وتسجيل الطلاب | أكاديمية المعلم الأزهري</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--green:#1B5E3B;--green-dark:#0F3D26;--green-light:#2D7A52;--gold:#C9A84C;--gold-light:#E2C47A;--cream:#FAF7F0;--cream-dark:#F0EAD8;--charcoal:#1A1A2E;--text-muted:#6B7280;--white:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--charcoal);}
+
+nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(15,61,38,0.97);height:65px;border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 3%;}
+.nav-logo{font-family:'Amiri',serif;font-size:1.1rem;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);}
+.nav-links{display:flex;gap:2px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.78rem;padding:5px 8px;border-radius:6px;transition:all 0.3s;}
+.nav-links a:hover,.nav-links a.active{background:rgba(201,168,76,0.2);color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--green-dark);padding:7px 14px;border-radius:50px;font-weight:700;font-size:0.78rem;text-decoration:none;}
+
+.page-wrap{padding:80px 3% 40px;}
+
+/* TABS */
+.main-tabs{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.main-tab{padding:12px 24px;border-radius:50px;border:2px solid var(--cream-dark);background:var(--white);font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.main-tab:hover{border-color:var(--green);color:var(--green);}
+.main-tab.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* ═══ KHATMA SECTION ═══ */
+.khatma-wrap{max-width:900px;margin:0 auto;}
+
+.khatma-hero{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:24px;padding:32px;text-align:center;margin-bottom:24px;}
+.khatma-hero h2{font-family:'Amiri',serif;font-size:2rem;color:#fff;margin-bottom:8px;}
+.khatma-hero p{color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:20px;}
+
+/* Progress Ring */
+.progress-ring-wrap{display:flex;justify-content:center;margin-bottom:16px;}
+.progress-ring{position:relative;width:160px;height:160px;}
+.progress-ring svg{transform:rotate(-90deg);}
+.progress-ring circle{fill:none;stroke-width:12;}
+.ring-bg{stroke:rgba(255,255,255,0.15);}
+.ring-fill{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset 1s ease;}
+.ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-pct{font-family:'Amiri',serif;font-size:2rem;color:#fff;font-weight:700;}
+.ring-label{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+
+.khatma-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+.k-stat{text-align:center;background:rgba(255,255,255,0.1);border-radius:14px;padding:12px 20px;}
+.k-stat-num{font-family:'Amiri',serif;font-size:1.6rem;color:var(--gold);font-weight:700;}
+.k-stat-lbl{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+
+/* SURAHS GRID */
+.surahs-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px;}
+.surah-check{background:var(--white);border-radius:12px;padding:12px;cursor:pointer;transition:all 0.3s;border:2px solid var(--cream-dark);text-align:center;user-select:none;}
+.surah-check:hover{border-color:var(--green);}
+.surah-check.done{background:#E8F5E9;border-color:var(--green);}
+.surah-check.done .s-name{color:var(--green);}
+.surah-check .s-num{font-size:0.7rem;color:var(--text-muted);margin-bottom:3px;}
+.surah-check .s-name{font-family:'Amiri',serif;font-size:0.95rem;color:var(--charcoal);}
+.surah-check .s-check{font-size:1rem;margin-top:4px;}
+
+/* Action Buttons */
+.khatma-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.k-btn{padding:10px 20px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;font-size:0.88rem;transition:all 0.3s;display:flex;align-items:center;gap:6px;}
+.k-btn-green{background:var(--green);color:#fff;}
+.k-btn-green:hover{background:var(--green-light);}
+.k-btn-gold{background:var(--gold);color:var(--green-dark);}
+.k-btn-gold:hover{background:var(--gold-light);}
+.k-btn-red{background:#FFEBEE;color:#C62828;}
+.k-btn-red:hover{background:#FFCDD2;}
+
+/* Khatma History */
+.khatma-history{background:var(--white);border-radius:20px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.khatma-history h3{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green);margin-bottom:16px;}
+.history-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--cream-dark);}
+.history-item:last-child{border-bottom:none;}
+.history-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--green-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;}
+.history-info h4{font-size:0.92rem;font-weight:700;margin-bottom:2px;}
+.history-info p{font-size:0.78rem;color:var(--text-muted);}
+
+/* ═══ REGISTRATION SECTION ═══ */
+.reg-wrap{max-width:700px;margin:0 auto;}
+.reg-hero{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:24px;padding:28px;text-align:center;margin-bottom:24px;}
+.reg-hero h2{font-family:'Amiri',serif;font-size:1.8rem;color:#fff;margin-bottom:6px;}
+.reg-hero p{color:rgba(255,255,255,0.75);font-size:0.88rem;}
+
+.reg-form{background:var(--white);border-radius:20px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-row.full{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:0.85rem;font-weight:700;color:var(--charcoal);display:flex;align-items:center;gap:6px;}
+.form-group label i{color:var(--green);}
+.form-group input,.form-group select,.form-group textarea{padding:12px 14px;border-radius:12px;border:2px solid var(--cream-dark);font-family:'Tajawal',sans-serif;font-size:0.92rem;outline:none;transition:all 0.3s;background:var(--cream);}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--green);background:#fff;}
+.form-group select option{background:#fff;}
+.form-group textarea{resize:vertical;min-height:80px;}
+
+.radio-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+.radio-opt input[type="radio"]{display:none;}
+.radio-opt label{display:block;padding:8px 16px;border-radius:50px;border:2px solid var(--cream-dark);color:var(--text-muted);font-size:0.82rem;cursor:pointer;transition:all 0.3s;}
+.radio-opt input:checked+label{background:var(--green);color:#fff;border-color:var(--green);font-weight:700;}
+
+.submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 24px rgba(27,94,59,0.3);}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(27,94,59,0.4);}
+
+.success-box{display:none;background:#E8F5E9;border-radius:16px;padding:24px;text-align:center;margin-top:16px;}
+.success-box i{font-size:3rem;color:var(--green);margin-bottom:12px;display:block;}
+.success-box h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green);margin-bottom:8px;}
+.success-box p{color:var(--text-muted);font-size:0.88rem;line-height:1.7;}
+
+.wa-float{position:fixed;bottom:22px;left:22px;z-index:999;width:50px;height:50px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.4);}
+
+@media(max-width:600px){
+  .nav-links{display:none;}
+  .form-row{grid-template-columns:1fr;}
+  .surahs-check-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CCJECHG2DF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CCJECHG2DF');</script>
+
+<nav>
+  <a href="index-standalone.html" class="nav-logo">
+    <img src="logo.png" alt="logo">
+    <span>أكاديمية المعلم الأزهري</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index-standalone.html">الرئيسية</a></li>
+    <li><a href="quran-standalone.html">المصحف</a></li>
+    <li><a href="prayer-standalone.html">🕌 الصلاة</a></li>
+    <li><a href="khatma-standalone.html" class="active">الختمة</a></li>
+    <li><a href="kids-standalone.html">الأطفال</a></li>
+    <li><a href="quiz-standalone.html">مسابقات</a></li>
+  </ul>
+  <a href="#register" class="nav-cta">سجّل الآن 📝</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- MAIN TABS -->
+  <div class="main-tabs">
+    <button class="main-tab active" onclick="showMain('khatma',this)">
+      <i class="fas fa-book-open"></i> ختمة القرآن
+    </button>
+    <button class="main-tab" onclick="showMain('register',this)">
+      <i class="fas fa-user-plus"></i> تسجيل طالب جديد
+    </button>
+  </div>
+
+  <!-- ═══ KHATMA ═══ -->
+  <div id="main-khatma" class="khatma-wrap">
+
+    <div class="khatma-hero">
+      <h2>📿 متابعة ختمة القرآن الكريم</h2>
+      <p>تابع تقدمك في حفظ وقراءة القرآن الكريم سورة بسورة</p>
+
+      <div class="progress-ring-wrap">
+        <div class="progress-ring">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle class="ring-bg" cx="80" cy="80" r="70"/>
+            <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="70"/>
+          </svg>
+          <div class="ring-text">
+            <div class="ring-pct" id="ringPct">0%</div>
+            <div class="ring-label">مكتمل</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="khatma-stats">
+        <div class="k-stat">
+          <div class="k-stat-num" id="doneCount">0</div>
+          <div class="k-stat-lbl">سورة مكتملة</div>
+        </div>
+        <div class="k-stat">
+          <div class="k-stat-num" id="remainCount">114</div>
+          <div class="k-stat-lbl">سورة متبقية</div>
+        </div>
+        <div class="k-stat">
+          <div class="k-stat-num" id="khatmaCount">0</div>
+          <div class="k-stat-lbl">ختمة مكتملة</div>
+        </div>
+      </div>
+
+      <div class="khatma-actions">
+        <button class="k-btn k-btn-green" onclick="markAllDone()"><i class="fas fa-check-double"></i> علّم الكل مكتمل</button>
+        <button class="k-btn k-btn-gold" onclick="shareProgress()"><i class="fab fa-whatsapp"></i> شارك تقدمك</button>
+        <button class="k-btn k-btn-red" onclick="resetKhatma()"><i class="fas fa-redo"></i> بدء ختمة جديدة</button>
+      </div>
+    </div>
+
+    <!-- SURAHS GRID -->
+    <div style="background:var(--white);border-radius:20px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,0.06);margin-bottom:20px;">
+      <h3 style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--green);margin-bottom:16px;">
+        <i class="fas fa-list"></i> السور — اضغط على السورة لتعليمها مكتملة
+      </h3>
+      <div class="surahs-check-grid" id="surahsCheckGrid">
+        <div style="text-align:center;padding:30px;color:var(--text-muted);grid-column:1/-1;">
+          <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:var(--green);display:block;margin-bottom:10px;"></i>
+          جاري التحميل...
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="khatma-history" id="khatmaHistory" style="display:none;">
+      <h3><i class="fas fa-history"></i> سجل الختمات</h3>
+      <div id="historyList"></div>
+    </div>
+
+  </div>
+
+  <!-- ═══ REGISTRATION ═══ -->
+  <div id="main-register" style="display:none;" class="reg-wrap" id="register">
+
+    <div class="reg-hero">
+      <h2>📝 تسجيل طالب جديد</h2>
+      <p>سيتم إرسال بيانات الطالب مباشرة على واتساب الأكاديمية</p>
+    </div>
+
+    <div class="reg-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> اسم الطالب كاملاً *</label>
+          <input type="text" id="regName" placeholder="أدخل الاسم الكامل">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-birthday-cake"></i> العمر *</label>
+          <input type="number" id="regAge" placeholder="مثال: 12" min="4" max="80">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label><i class="fab fa-whatsapp"></i> رقم واتساب الطالب/الولي *</label>
+          <input type="tel" id="regPhone" placeholder="+20 100 000 0000">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-globe"></i> الدولة *</label>
+          <input type="text" id="regCountry" placeholder="مثال: مصر، السعودية...">
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label><i class="fas fa-graduation-cap"></i> المستوى الحالي *</label>
+          <div class="radio-wrap">
+            <div class="radio-opt"><input type="radio" name="level" id="l1" value="مبتدئ — لا يعرف القراءة"><label for="l1">مبتدئ</label></div>
+            <div class="radio-opt"><input type="radio" name="level" id="l2" value="يقرأ بصعوبة"><label for="l2">يقرأ بصعوبة</label></div>
+            <div class="radio-opt"><input type="radio" name="level" id="l3" value="يقرأ جيداً"><label for="l3">يقرأ جيداً</label></div>
+            <div class="radio-opt"><input type="radio" name="level" id="l4" value="يجيد التجويد"><label for="l4">يجيد التجويد</label></div>
+            <div class="radio-opt"><input type="radio" name="level" id="l5" value="حافظ للقرآن"><label for="l5">حافظ</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label><i class="fas fa-bullseye"></i> الهدف من التسجيل *</label>
+          <div class="radio-wrap">
+            <div class="radio-opt"><input type="radio" name="goal" id="g1" value="تعلم القراءة الصحيحة"><label for="g1">القراءة الصحيحة</label></div>
+            <div class="radio-opt"><input type="radio" name="goal" id="g2" value="تعلم التجويد"><label for="g2">التجويد</label></div>
+            <div class="radio-opt"><input type="radio" name="goal" id="g3" value="حفظ القرآن"><label for="g3">الحفظ</label></div>
+            <div class="radio-opt"><input type="radio" name="goal" id="g4" value="الحصول على الإجازة"><label for="g4">الإجازة</label></div>
+            <div class="radio-opt"><input type="radio" name="goal" id="g5" value="تعليم الأطفال"><label for="g5">للأطفال</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label><i class="fas fa-calendar-week"></i> عدد الحصص أسبوعياً</label>
+          <div class="radio-wrap">
+            <div class="radio-opt"><input type="radio" name="sessions" id="s1" value="حصتان في الأسبوع"><label for="s1">٢ حصص</label></div>
+            <div class="radio-opt"><input type="radio" name="sessions" id="s2" value="٣ حصص في الأسبوع"><label for="s2">٣ حصص</label></div>
+            <div class="radio-opt"><input type="radio" name="sessions" id="s3" value="٥ حصص في الأسبوع"><label for="s3">٥ حصص</label></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-clock"></i> الوقت المفضل</label>
+          <div class="radio-wrap">
+            <div class="radio-opt"><input type="radio" name="time" id="t1" value="صباحاً"><label for="t1">🌅 صباحاً</label></div>
+            <div class="radio-opt"><input type="radio" name="time" id="t2" value="مساءً"><label for="t2">🌆 مساءً</label></div>
+            <div class="radio-opt"><input type="radio" name="time" id="t3" value="مرن"><label for="t3">🕐 مرن</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label><i class="fas fa-comment"></i> ملاحظات إضافية</label>
+          <textarea id="regNotes" placeholder="أي معلومات إضافية تريد إضافتها..."></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="submitRegistration()">
+        <i class="fab fa-whatsapp"></i>
+        إرسال طلب التسجيل على واتساب
+      </button>
+
+      <div class="success-box" id="successBox">
+        <i class="fas fa-check-circle"></i>
+        <h3>تم إرسال طلبك بنجاح! 🎉</h3>
+        <p>سيتواصل معك فريق الأكاديمية خلال أقل من ساعة على رقم واتساب المسجل</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<a href="https://wa.me/201002798497" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+// ═══ TABS ═══
+function showMain(id, btn) {
+  document.querySelectorAll('[id^="main-"]').forEach(el => el.style.display = 'none');
+  document.getElementById('main-' + id).style.display = 'block';
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ═══ KHATMA ═══
+const SURAHS_DATA = [
+  'الفاتحة','البقرة','آل عمران','النساء','المائدة','الأنعام','الأعراف','الأنفال','التوبة','يونس',
+  'هود','يوسف','الرعد','إبراهيم','الحجر','النحل','الإسراء','الكهف','مريم','طه',
+  'الأنبياء','الحج','المؤمنون','النور','الفرقان','الشعراء','النمل','القصص','العنكبوت','الروم',
+  'لقمان','السجدة','الأحزاب','سبأ','فاطر','يس','الصافات','ص','الزمر','غافر',
+  'فصلت','الشورى','الزخرف','الدخان','الجاثية','الأحقاف','محمد','الفتح','الحجرات','ق',
+  'الذاريات','الطور','النجم','القمر','الرحمن','الواقعة','الحديد','المجادلة','الحشر','الممتحنة',
+  'الصف','الجمعة','المنافقون','التغابن','الطلاق','التحريم','الملك','القلم','الحاقة','المعارج',
+  'نوح','الجن','المزمل','المدثر','القيامة','الإنسان','المرسلات','النبأ','النازعات','عبس',
+  'التكوير','الانفطار','المطففين','الانشقاق','البروج','الطارق','الأعلى','الغاشية','الفجر','البلد',
+  'الشمس','الليل','الضحى','الشرح','التين','العلق','القدر','البينة','الزلزلة','العاديات',
+  'القارعة','التكاثر','العصر','الهمزة','الفيل','قريش','الماعون','الكوثر','الكافرون','النصر',
+  'المسد','الإخلاص','الفلق','الناس'
+];
+
+let doneSurahs = JSON.parse(localStorage.getItem('khatma_done') || '[]');
+let khatmaHistory = JSON.parse(localStorage.getItem('khatma_history') || '[]');
+
+function buildSurahsGrid() {
+  const grid = document.getElementById('surahsCheckGrid');
+  grid.innerHTML = SURAHS_DATA.map((name, i) => {
+    const isDone = doneSurahs.includes(i);
+    return `
+      <div class="surah-check ${isDone ? 'done' : ''}" onclick="toggleSurah(${i})" id="sc-${i}">
+        <div class="s-num">${i + 1}</div>
+        <div class="s-name">${name}</div>
+        <div class="s-check">${isDone ? '✅' : '⬜'}</div>
+      </div>
+    `;
+  }).join('');
+  updateStats();
+}
+
+function toggleSurah(idx) {
+  if (doneSurahs.includes(idx)) {
+    doneSurahs = doneSurahs.filter(i => i !== idx);
+  } else {
+    doneSurahs.push(idx);
+  }
+  localStorage.setItem('khatma_done', JSON.stringify(doneSurahs));
+  
+  const el = document.getElementById(`sc-${idx}`);
+  const isDone = doneSurahs.includes(idx);
+  el.classList.toggle('done', isDone);
+  el.querySelector('.s-check').textContent = isDone ? '✅' : '⬜';
+  el.querySelector('.s-name').style.color = isDone ? 'var(--green)' : '';
+  
+  updateStats();
+  
+  // Check if khatma complete
+  if (doneSurahs.length === 114) {
+    completeKhatma();
+  }
+}
+
+function updateStats() {
+  const done = doneSurahs.length;
+  const total = 114;
+  const pct = Math.round((done / total) * 100);
+  
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('remainCount').textContent = total - done;
+  document.getElementById('ringPct').textContent = pct + '%';
+  
+  // Update ring
+  const circumference = 2 * Math.PI * 70;
+  const offset = circumference - (pct / 100) * circumference;
+  const ring = document.getElementById('ringFill');
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = offset;
+}
+
+function completeKhatma() {
+  const now = new Date();
+  const dateStr = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+  khatmaHistory.unshift({ date: dateStr, num: khatmaHistory.length + 1 });
+  localStorage.setItem('khatma_history', JSON.stringify(khatmaHistory));
+  document.getElementById('khatmaCount').textContent = khatmaHistory.length;
+  renderHistory();
+  
+  setTimeout(() => {
+    alert('🎉 مبروك! أتممت ختمة القرآن الكريم كاملة!\nبارك الله فيك وجعله في ميزان حسناتك 🤲');
+  }, 500);
+}
+
+function resetKhatma() {
+  if (!confirm('هل تريد بدء ختمة جديدة؟ سيتم حفظ الختمة الحالية في السجل.')) return;
+  if (doneSurahs.length > 0) {
+    const now = new Date();
+    const dateStr = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+    const pct = Math.round((doneSurahs.length / 114) * 100);
+    khatmaHistory.unshift({ date: dateStr, num: khatmaHistory.length + 1, pct, partial: doneSurahs.length < 114 });
+    localStorage.setItem('khatma_history', JSON.stringify(khatmaHistory));
+  }
+  doneSurahs = [];
+  localStorage.setItem('khatma_done', '[]');
+  buildSurahsGrid();
+  renderHistory();
+}
+
+function markAllDone() {
+  if (!confirm('هل تريد تعليم جميع السور كمكتملة؟')) return;
+  doneSurahs = Array.from({length: 114}, (_, i) => i);
+  localStorage.setItem('khatma_done', JSON.stringify(doneSurahs));
+  buildSurahsGrid();
+}
+
+function shareProgress() {
+  const done = doneSurahs.length;
+  const pct = Math.round((done / 114) * 100);
+  const msg = `📖 تقدمي في ختمة القرآن الكريم\n\n✅ أتممت ${done} سورة من 114\n📊 النسبة: ${pct}%\n\nمن أكاديمية المعلم الأزهري 🕌\n${window.location.href}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function renderHistory() {
+  document.getElementById('khatmaCount').textContent = khatmaHistory.length;
+  if (khatmaHistory.length === 0) {
+    document.getElementById('khatmaHistory').style.display = 'none';
+    return;
+  }
+  document.getElementById('khatmaHistory').style.display = 'block';
+  document.getElementById('historyList').innerHTML = khatmaHistory.map(h => `
+    <div class="history-item">
+      <div class="history-num">${h.num}</div>
+      <div class="history-info">
+        <h4>${h.partial ? 'ختمة جزئية (' + h.pct + '%)' : '✅ ختمة كاملة'}</h4>
+        <p>${h.date}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ═══ REGISTRATION ═══
+function submitRegistration() {
+  const name = document.getElementById('regName').value.trim();
+  const age = document.getElementById('regAge').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const country = document.getElementById('regCountry').value.trim();
+  const level = document.querySelector('input[name="level"]:checked')?.value || 'غير محدد';
+  const goal = document.querySelector('input[name="goal"]:checked')?.value || 'غير محدد';
+  const sessions = document.querySelector('input[name="sessions"]:checked')?.value || 'غير محدد';
+  const time = document.querySelector('input[name="time"]:checked')?.value || 'غير محدد';
+  const notes = document.getElementById('regNotes').value.trim();
+
+  if (!name || !phone || !country) {
+    alert('يرجى تعبئة الحقول المطلوبة: الاسم ورقم الواتساب والدولة');
+    return;
+  }
+
+  const msg = `
+🌟 *طلب تسجيل جديد — أكاديمية المعلم الأزهري*
+
+👤 *الاسم:* ${name}
+🎂 *العمر:* ${age} سنة
+📱 *الواتساب:* ${phone}
+🌍 *الدولة:* ${country}
+
+📚 *المستوى:* ${level}
+🎯 *الهدف:* ${goal}
+📅 *الحصص:* ${sessions}
+⏰ *الوقت المفضل:* ${time}
+
+${notes ? '📝 *ملاحظات:* ' + notes : ''}
+
+---
+تم الإرسال من موقع أكاديمية المعلم الأزهري 🕌
+  `.trim();
+
+  window.open(`https://wa.me/201002798497?text=${encodeURIComponent(msg)}`, '_blank');
+  
+  document.getElementById('successBox').style.display = 'block';
+  document.getElementById('successBox').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ═══ INIT ═══
+buildSurahsGrid();
+renderHistory();
+</script>
+</body>
+</html>
