@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آية وحديث اليوم | أكاديمية المعلم الأزهري</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--green:#1B5E3B;--green-dark:#0F3D26;--green-light:#2D7A52;--gold:#C9A84C;--gold-light:#E2C47A;--cream:#FAF7F0;--cream-dark:#F0EAD8;--charcoal:#1A1A2E;--text-muted:#6B7280;--white:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(15,61,38,0.97);height:65px;border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 3%;}
+.nav-logo{font-family:'Amiri',serif;font-size:1.1rem;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);}
+.nav-links{display:flex;gap:2px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.78rem;padding:5px 8px;border-radius:6px;transition:all 0.3s;}
+.nav-links a:hover,.nav-links a.active{background:rgba(201,168,76,0.2);color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--green-dark);padding:7px 14px;border-radius:50px;font-weight:700;font-size:0.78rem;text-decoration:none;}
+
+.page-wrap{padding:80px 3% 40px;max-width:900px;margin:0 auto;}
+
+/* DATE HEADER */
+.date-header{text-align:center;margin-bottom:28px;}
+.date-greg{font-size:0.9rem;color:var(--text-muted);margin-bottom:4px;}
+.date-hijri{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green);}
+
+/* AYAH CARD */
+.ayah-card{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:24px;padding:36px 28px;margin-bottom:24px;position:relative;overflow:hidden;}
+.ayah-card::before{content:'﷽';font-family:'Amiri',serif;font-size:8rem;position:absolute;left:-20px;top:-20px;opacity:0.04;color:#fff;pointer-events:none;}
+.ayah-label{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.4);color:var(--gold);padding:6px 16px;border-radius:50px;font-size:0.82rem;font-weight:700;margin-bottom:20px;}
+.ayah-text{font-family:'Amiri',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:#fff;line-height:2.3;text-align:center;margin-bottom:20px;}
+.ayah-ref{text-align:center;color:rgba(255,255,255,0.65);font-size:0.85rem;margin-bottom:20px;}
+.ayah-translation{background:rgba(255,255,255,0.08);border-radius:14px;padding:16px;color:rgba(255,255,255,0.85);font-size:0.92rem;line-height:1.85;margin-bottom:16px;}
+.ayah-translation .trans-label{font-size:0.75rem;color:var(--gold);font-weight:700;margin-bottom:6px;}
+.ayah-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.ayah-btn{padding:9px 20px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;font-size:0.85rem;transition:all 0.3s;display:flex;align-items:center;gap:6px;}
+.btn-gold{background:var(--gold);color:var(--green-dark);}
+.btn-white{background:rgba(255,255,255,0.15);color:#fff;}
+.btn-white:hover{background:rgba(255,255,255,0.25);}
+.btn-gold:hover{background:var(--gold-light);}
+
+/* HADITH CARD */
+.hadith-card{background:var(--white);border-radius:24px;padding:32px 28px;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,0.06);border-right:6px solid var(--gold);}
+.hadith-label{display:inline-flex;align-items:center;gap:8px;background:#FFF8E1;border:1px solid rgba(201,168,76,0.3);color:#F57F17;padding:6px 16px;border-radius:50px;font-size:0.82rem;font-weight:700;margin-bottom:20px;}
+.hadith-text{font-family:'Amiri',serif;font-size:clamp(1.2rem,2.5vw,1.5rem);color:var(--charcoal);line-height:2.2;margin-bottom:16px;}
+.hadith-sanad{color:var(--text-muted);font-size:0.82rem;margin-bottom:16px;display:flex;align-items:center;gap:6px;}
+.hadith-explanation{background:var(--cream);border-radius:12px;padding:16px;font-size:0.9rem;line-height:1.85;color:#333;margin-bottom:16px;}
+.hadith-explanation .exp-label{font-size:0.75rem;color:var(--green);font-weight:700;margin-bottom:8px;}
+.hadith-translation{background:#F3F4FF;border-radius:12px;padding:14px;font-size:0.88rem;line-height:1.8;color:#333;margin-bottom:16px;}
+.hadith-translation .trans-label{font-size:0.75rem;color:#5C6BC0;font-weight:700;margin-bottom:6px;}
+.hadith-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.hadith-btn{padding:9px 20px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;font-size:0.85rem;transition:all 0.3s;display:flex;align-items:center;gap:6px;}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:var(--green-light);}
+.btn-outline{background:transparent;color:var(--green);border:2px solid var(--green);}
+.btn-outline:hover{background:var(--green);color:#fff;}
+
+/* ARCHIVE */
+.archive-section{background:var(--white);border-radius:20px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.archive-title{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.archive-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.arch-tab{padding:7px 18px;border-radius:50px;border:2px solid var(--cream-dark);background:var(--cream);font-family:'Tajawal',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.3s;}
+.arch-tab.active{background:var(--green);color:#fff;border-color:var(--green);}
+.archive-list{display:flex;flex-direction:column;gap:12px;}
+.archive-item{background:var(--cream);border-radius:14px;padding:16px;cursor:pointer;transition:all 0.3s;border:2px solid transparent;}
+.archive-item:hover{border-color:var(--green);background:#fff;}
+.archive-item .arc-date{font-size:0.75rem;color:var(--text-muted);margin-bottom:6px;}
+.archive-item .arc-text{font-family:'Amiri',serif;font-size:1.05rem;color:var(--charcoal);line-height:1.7;}
+.archive-item .arc-ref{font-size:0.75rem;color:var(--green);margin-top:6px;font-weight:600;}
+
+.wa-float{position:fixed;bottom:22px;left:22px;z-index:999;width:50px;height:50px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.4);}
+
+@media(max-width:600px){.nav-links{display:none;}.ayah-text{font-size:1.3rem;}.hadith-text{font-size:1.1rem;}}
+</style>
+</head>
+<body>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CCJECHG2DF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CCJECHG2DF');</script>
+
+<nav>
+  <a href="index-standalone.html" class="nav-logo">
+    <img src="logo.png" alt="logo">
+    <span>أكاديمية المعلم الأزهري</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index-standalone.html">الرئيسية</a></li>
+    <li><a href="quran-standalone.html">المصحف</a></li>
+    <li><a href="prayer-standalone.html">🕌 الصلاة</a></li>
+    <li><a href="daily-standalone.html" class="active">📖 يومياً</a></li>
+    <li><a href="khatma-standalone.html">📿 الختمة</a></li>
+    <li><a href="kids-standalone.html">الأطفال</a></li>
+  </ul>
+  <a href="index-standalone.html#inquiry" class="nav-cta">حصة مجانية 🎁</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- DATE -->
+  <div class="date-header">
+    <div class="date-greg" id="dateGreg"></div>
+    <div class="date-hijri" id="dateHijri"></div>
+  </div>
+
+  <!-- AYAH OF THE DAY -->
+  <div class="ayah-card">
+    <div class="ayah-label"><i class="fas fa-quran"></i> آية اليوم</div>
+    <div class="ayah-text" id="ayahText">جاري التحميل...</div>
+    <div class="ayah-ref" id="ayahRef"></div>
+    <div class="ayah-translation">
+      <div class="trans-label">🇬🇧 English Translation</div>
+      <div id="ayahTransEn">Loading...</div>
+    </div>
+    <div class="ayah-translation">
+      <div class="trans-label">🇫🇷 Traduction Française</div>
+      <div id="ayahTransFr">Chargement...</div>
+    </div>
+    <div class="ayah-actions">
+      <button class="ayah-btn btn-gold" onclick="shareAyah()"><i class="fab fa-whatsapp"></i> شارك</button>
+      <button class="ayah-btn btn-white" onclick="copyAyah()"><i class="fas fa-copy"></i> نسخ</button>
+      <button class="ayah-btn btn-white" onclick="loadRandomAyah()"><i class="fas fa-random"></i> آية أخرى</button>
+    </div>
+  </div>
+
+  <!-- HADITH OF THE DAY -->
+  <div class="hadith-card">
+    <div class="hadith-label"><i class="fas fa-moon"></i> حديث اليوم</div>
+    <div class="hadith-text" id="hadithText"></div>
+    <div class="hadith-sanad"><i class="fas fa-book"></i> <span id="hadithSanad"></span></div>
+    <div class="hadith-explanation">
+      <div class="exp-label">💡 الشرح المختصر</div>
+      <div id="hadithExp"></div>
+    </div>
+    <div class="hadith-translation">
+      <div class="trans-label">🌍 English / Français</div>
+      <div id="hadithTrans"></div>
+    </div>
+    <div class="hadith-actions">
+      <button class="hadith-btn btn-green" onclick="shareHadith()"><i class="fab fa-whatsapp"></i> شارك الحديث</button>
+      <button class="hadith-btn btn-outline" onclick="copyHadith()"><i class="fas fa-copy"></i> نسخ</button>
+      <button class="hadith-btn btn-outline" onclick="loadNextHadith()"><i class="fas fa-random"></i> حديث آخر</button>
+    </div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div class="archive-section">
+    <div class="archive-title"><i class="fas fa-archive"></i> أرشيف الآيات والأحاديث</div>
+    <div class="archive-tabs">
+      <button class="arch-tab active" onclick="showArchive('ayahs',this)">📖 الآيات</button>
+      <button class="arch-tab" onclick="showArchive('hadiths',this)">🌙 الأحاديث</button>
+    </div>
+    <div class="archive-list" id="archiveList"></div>
+  </div>
+
+</div>
+
+<a href="https://wa.me/201002798497" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+// ─── DATA ───
+const HADITHS = [
+  {
+    text: 'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى',
+    sanad: 'متفق عليه — رواه البخاري ومسلم',
+    exp: 'الأعمال لا تُقبل إلا بنية خالصة لله تعالى. فمن صلى أو صام أو تصدق رياءً فلا أجر له، ومن فعلها لله فله الأجر كاملاً.',
+    en: 'Actions are judged by intentions, and everyone will get what they intended.',
+    fr: 'Les actes ne valent que par les intentions, et chacun n\'aura que ce qu\'il a intentionné.'
+  },
+  {
+    text: 'الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ',
+    sanad: 'متفق عليه — رواه البخاري ومسلم',
+    exp: 'المسلم الحقيقي هو من يأمن منه الناس، فلا يؤذيهم بكلامه ولا بأفعاله. فحفظ اللسان من أعظم أبواب الخير.',
+    en: 'A Muslim is one from whose tongue and hand the Muslims are safe.',
+    fr: 'Le musulman est celui dont les musulmans sont à l\'abri de sa langue et de sa main.'
+  },
+  {
+    text: 'لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',
+    sanad: 'متفق عليه — رواه البخاري ومسلم',
+    exp: 'من كمال الإيمان أن تحب لأخيك المسلم ما تحب لنفسك من الخير، وتكره له ما تكره لنفسك من الشر.',
+    en: 'None of you will have faith till he wishes for his brother what he likes for himself.',
+    fr: 'Aucun d\'entre vous ne croira vraiment jusqu\'à ce qu\'il aime pour son frère ce qu\'il aime pour lui-même.'
+  },
+  {
+    text: 'مَنْ كَانَ يُؤْمِنُ بِاللهِ وَاليَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ',
+    sanad: 'متفق عليه — رواه البخاري ومسلم',
+    exp: 'على المؤمن أن يزن كلامه قبل أن ينطق به. فإن كان خيراً تكلم، وإن كان شراً أو لغواً صمت. فالصمت عن الشر عبادة.',
+    en: 'Whoever believes in Allah and the Last Day should speak good or remain silent.',
+    fr: 'Que celui qui croit en Allah et au Jour du Jugement dise une bonne parole ou qu\'il se taise.'
+  },
+  {
+    text: 'أَحَبُّ الأَعْمَالِ إِلَى اللهِ أَدْوَمُهَا وَإِنْ قَلَّ',
+    sanad: 'متفق عليه — رواه البخاري ومسلم',
+    exp: 'الداومة على العمل الصالح وإن قلّ أحب إلى الله من العمل الكثير المنقطع. فصلاتان راتبتان كل يوم خير من ألف ركعة في يوم وانقطاع.',
+    en: 'The most beloved deeds to Allah are those done regularly, even if they are few.',
+    fr: 'Les actes les plus aimés d\'Allah sont ceux accomplis régulièrement, même s\'ils sont peu nombreux.'
+  },
+  {
+    text: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
+    sanad: 'رواه البخاري',
+    exp: 'أفضل الناس منزلة عند الله من جمع بين تعلم القرآن الكريم وتعليمه لغيره. وهذا يشمل تعلم التلاوة والتجويد والحفظ والمعاني.',
+    en: 'The best among you are those who learn the Quran and teach it.',
+    fr: 'Le meilleur d\'entre vous est celui qui apprend le Coran et l\'enseigne.'
+  },
+  {
+    text: 'طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ',
+    sanad: 'رواه ابن ماجه وصحّحه الألباني',
+    exp: 'طلب العلم الشرعي فريضة على كل مسلم ومسلمة. والعلم المقصود هنا هو العلم الضروري لصحة العبادات والمعاملات.',
+    en: 'Seeking knowledge is an obligation upon every Muslim.',
+    fr: 'La recherche du savoir est une obligation pour tout musulman.'
+  },
+  {
+    text: 'اتَّقِ اللهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ',
+    sanad: 'رواه الترمذي وقال حديث حسن',
+    exp: 'ثلاثة وصايا جامعة: خشية الله في السر والعلن، ومتابعة السيئة بالحسنة لمحوها، وحسن التعامل مع الناس.',
+    en: 'Fear Allah wherever you are, follow a bad deed with a good one to erase it, and treat people with good character.',
+    fr: 'Craignez Allah où que vous soyez, faites suivre une mauvaise action d\'une bonne pour l\'effacer, et traitez les gens avec un beau caractère.'
+  },
+  {
+    text: 'الدُّنْيَا سِجْنُ الْمُؤْمِنِ وَجَنَّةُ الْكَافِرِ',
+    sanad: 'رواه مسلم',
+    exp: 'المؤمن في الدنيا مقيّد بالحلال والحرام، ومشغول بالعبادة والتكاليف. أما الكافر فلا يرى إلا متع الدنيا. والعاقبة للمتقين.',
+    en: 'The world is a prison for the believer and a paradise for the disbeliever.',
+    fr: 'Le monde est une prison pour le croyant et un paradis pour le mécréant.'
+  },
+  {
+    text: 'مَا مَلأَ ابْنُ آدَمَ وِعَاءً شَرًّا مِنْ بَطْنٍ، بِحَسْبِ ابْنِ آدَمَ لُقَيْمَاتٌ يُقِمْنَ صُلْبَهُ',
+    sanad: 'رواه الترمذي وصحّحه الألباني',
+    exp: 'التحذير من الإفراط في الأكل. والمؤمن يأكل بقدر الحاجة: ثلث للطعام وثلث للشراب وثلث للنفس. وقلة الأكل من أسباب صحة القلب والبدن.',
+    en: 'No human ever filled a vessel worse than a stomach. Sufficient for any son of Adam are some morsels to keep his back straight.',
+    fr: 'Le fils d\'Adam n\'a jamais rempli de récipient pire que son ventre. Quelques bouchées suffisent pour tenir son dos droit.'
+  },
+  {
+    text: 'مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ',
+    sanad: 'متفق عليه',
+    exp: 'صيام رمضان بنية خالصة وإيمان يُكفّر الذنوب السابقة. والمراد بالإيمان التصديق بفرضيته، والاحتساب طلب الأجر من الله وحده.',
+    en: 'Whoever fasts Ramadan out of faith and seeking reward, his previous sins are forgiven.',
+    fr: 'Quiconque jeûne le Ramadan par foi et en cherchant la récompense, ses péchés passés lui seront pardonnés.'
+  },
+  {
+    text: 'بَلِّغُوا عَنِّي وَلَوْ آيَةً',
+    sanad: 'رواه البخاري',
+    exp: 'أمر النبي ﷺ بتبليغ دينه ولو كان ما يبلّغه آية واحدة. وهذا يشمل كل من ينشر علماً أو يعلّم أو يدعو إلى الله.',
+    en: 'Convey from me, even if it is one verse.',
+    fr: 'Transmettez de ma part, même si c\'est un seul verset.'
+  },
+  {
+    text: 'إِنَّ اللهَ لاَ يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ',
+    sanad: 'رواه مسلم',
+    exp: 'الله لا يحكم على الناس بمظاهرهم وأموالهم، بل بما في قلوبهم من الإخلاص والنية، وما يظهر على جوارحهم من الأعمال الصالحة.',
+    en: 'Allah does not look at your appearance or wealth, but He looks at your hearts and deeds.',
+    fr: 'Allah ne regarde pas votre apparence ni vos richesses, mais Il regarde vos cœurs et vos actes.'
+  },
+  {
+    text: 'الصَّلَوَاتُ الخَمْسُ، وَالجُمْعَةُ إِلَى الجُمْعَةِ، وَرَمَضَانُ إِلَى رَمَضَانَ، مُكَفِّرَاتٌ مَا بَيْنَهُنَّ إِذَا اجْتَنَبَ الكَبَائِرَ',
+    sanad: 'رواه مسلم',
+    exp: 'الصلوات الخمس والجمعة ورمضان تُكفّر الذنوب الصغيرة بين كل منها والأخرى، بشرط اجتناب الكبائر.',
+    en: 'The five daily prayers, Jumu\'ah to Jumu\'ah, and Ramadan to Ramadan are expiations for what is between them if major sins are avoided.',
+    fr: 'Les cinq prières quotidiennes, d\'un vendredi à l\'autre, et d\'un Ramadan à l\'autre sont des expiations pour ce qui est entre eux si l\'on évite les grands péchés.'
+  },
+];
+
+const AYAHS_POOL = [
+  {ar:'إِنَّ مَعَ الْعُسْرِ يُسْرًا', ref:'سورة الشرح: ٦', en:'Indeed, with hardship will be ease.', fr:'En vérité, avec la difficulté vient la facilité.'},
+  {ar:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ', ref:'سورة الطلاق: ٢-٣', en:'Whoever fears Allah, He will make for him a way out and provide for him from where he does not expect.', fr:'Quiconque craint Allah, Il lui fera trouver une issue et lui accordera des ressources là où il ne s\'y attendait pas.'},
+  {ar:'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا إِنَّ مَعَ الْعُسْرِ يُسْرًا', ref:'سورة الشرح: ٥-٦', en:'For indeed, with hardship will be ease. Indeed, with hardship will be ease.', fr:'Car en vérité, avec la difficulté vient la facilité. En vérité, avec la difficulté vient la facilité.'},
+  {ar:'وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ', ref:'سورة البقرة: ٢١٦', en:'But perhaps you hate a thing and it is good for you.', fr:'Peut-être détestez-vous une chose alors qu\'elle vous est bonne.'},
+  {ar:'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ', ref:'آية الكرسي — البقرة: ٢٥٥', en:'Allah! There is no deity except Him, the Ever-Living, the Sustainer of existence.', fr:'Allah! Il n\'y a de dieu que Lui, le Vivant, Celui qui subsiste par Lui-même.'},
+  {ar:'قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ', ref:'سورة الإخلاص: ١-٣', en:'Say: He is Allah, the One. Allah, the Eternal Refuge. He neither begets nor is born.', fr:'Dis: Il est Allah, l\'Unique. Allah, le Seul à être imploré pour ce que nous désirons. Il n\'a pas engendré et n\'a pas été engendré.'},
+  {ar:'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ', ref:'سورة البقرة: ٢٠١', en:'Our Lord, give us in this world that which is good and in the Hereafter that which is good and protect us from the punishment of the Fire.', fr:'Notre Seigneur! Donne-nous le bien dans cette vie et le bien dans la vie future et protège-nous du châtiment du Feu.'},
+  {ar:'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', ref:'سورة البقرة: ١٥٣', en:'Indeed, Allah is with the patient.', fr:'En vérité, Allah est avec les patients.'},
+  {ar:'وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ', ref:'سورة يوسف: ٨٧', en:'Do not despair of relief from Allah. Indeed, no one despairs of relief from Allah except the disbelieving people.', fr:'Ne désespérez pas de la miséricorde d\'Allah. Seuls les gens incrédules désespèrent de la miséricorde d\'Allah.'},
+  {ar:'وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ', ref:'سورة البقرة: ١٨٦', en:'When My servants ask you about Me, I am near. I answer the prayer of the supplicant when he calls upon Me.', fr:'Quand Mes serviteurs t\'interrogent sur Moi, Je suis tout proche; Je réponds à l\'appel de celui qui Me prie.'},
+  {ar:'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ', ref:'سورة آل عمران: ١٧٣', en:'Allah is sufficient for us, and He is the best Disposer of affairs.', fr:'Allah nous suffit et Il est le meilleur des garants.'},
+  {ar:'وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ', ref:'سورة هود: ٨٨', en:'My success is not but through Allah. Upon Him I have relied, and to Him I return.', fr:'Mon succès ne dépend que d\'Allah. C\'est en Lui que je me confie et c\'est vers Lui que je me tourne.'},
+  {ar:'يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', ref:'سورة البقرة: ١٥٣', en:'O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.', fr:'Ô vous qui croyez! Cherchez secours dans la patience et dans la prière. Allah est avec ceux qui endurent patiemment.'},
+  {ar:'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ', ref:'سورة الضحى: ٥', en:'And your Lord is going to give you, and you will be satisfied.', fr:'Et ton Seigneur te donnera, et tu seras satisfait.'},
+];
+
+// ─── STATE ───
+let currentHadithIdx = 0;
+let currentAyahIdx = 0;
+let ayahsHistory = JSON.parse(localStorage.getItem('ayahs_history') || '[]');
+let hadithsHistory = JSON.parse(localStorage.getItem('hadiths_history') || '[]');
+
+// ─── INIT ───
+window.onload = () => {
+  setDate();
+  loadDailyContent();
+  renderArchive('ayahs');
+};
+
+function setDate() {
+  const now = new Date();
+  const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  document.getElementById('dateGreg').textContent = `${days[now.getDay()]} — ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+  
+  const hijri = toHijri(now.getFullYear(), now.getMonth()+1, now.getDate());
+  const hijriMonths = ['محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+  document.getElementById('dateHijri').textContent = `${hijri.day} ${hijriMonths[hijri.month-1]} ${hijri.year} هـ`;
+}
+
+function loadDailyContent() {
+  // Use day of year as seed for consistent daily content
+  const now = new Date();
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+  
+  currentAyahIdx = dayOfYear % AYAHS_POOL.length;
+  currentHadithIdx = dayOfYear % HADITHS.length;
+  
+  renderAyah(currentAyahIdx);
+  renderHadith(currentHadithIdx);
+  
+  // Save to history
+  saveToHistory();
+}
+
+function renderAyah(idx) {
+  const a = AYAHS_POOL[idx];
+  document.getElementById('ayahText').textContent = a.ar;
+  document.getElementById('ayahRef').textContent = '📖 ' + a.ref;
+  document.getElementById('ayahTransEn').textContent = a.en;
+  document.getElementById('ayahTransFr').textContent = a.fr;
+}
+
+function renderHadith(idx) {
+  const h = HADITHS[idx];
+  document.getElementById('hadithText').textContent = h.text;
+  document.getElementById('hadithSanad').textContent = h.sanad;
+  document.getElementById('hadithExp').textContent = h.exp;
+  document.getElementById('hadithTrans').textContent = `🇬🇧 ${h.en}\n\n🇫🇷 ${h.fr}`;
+}
+
+function loadRandomAyah() {
+  currentAyahIdx = (currentAyahIdx + 1) % AYAHS_POOL.length;
+  renderAyah(currentAyahIdx);
+}
+
+function loadNextHadith() {
+  currentHadithIdx = (currentHadithIdx + 1) % HADITHS.length;
+  renderHadith(currentHadithIdx);
+}
+
+function shareAyah() {
+  const a = AYAHS_POOL[currentAyahIdx];
+  const msg = `📖 *آية اليوم*\n\n${a.ar}\n\n*${a.ref}*\n\n🇬🇧 ${a.en}\n\n🕌 أكاديمية المعلم الأزهري`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function shareHadith() {
+  const h = HADITHS[currentHadithIdx];
+  const msg = `🌙 *حديث اليوم*\n\n${h.text}\n\n📚 ${h.sanad}\n\n💡 ${h.exp}\n\n🕌 أكاديمية المعلم الأزهري`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function copyAyah() {
+  const a = AYAHS_POOL[currentAyahIdx];
+  navigator.clipboard.writeText(`${a.ar}\n${a.ref}`).then(() => alert('تم النسخ! ✅'));
+}
+
+function copyHadith() {
+  const h = HADITHS[currentHadithIdx];
+  navigator.clipboard.writeText(`${h.text}\n${h.sanad}`).then(() => alert('تم النسخ! ✅'));
+}
+
+function saveToHistory() {
+  const now = new Date();
+  const dateStr = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+  const a = AYAHS_POOL[currentAyahIdx];
+  const h = HADITHS[currentHadithIdx];
+  
+  if (!ayahsHistory.find(x => x.date === dateStr)) {
+    ayahsHistory.unshift({ date: dateStr, text: a.ar, ref: a.ref });
+    if (ayahsHistory.length > 30) ayahsHistory.pop();
+    localStorage.setItem('ayahs_history', JSON.stringify(ayahsHistory));
+  }
+  
+  if (!hadithsHistory.find(x => x.date === dateStr)) {
+    hadithsHistory.unshift({ date: dateStr, text: h.text, sanad: h.sanad });
+    if (hadithsHistory.length > 30) hadithsHistory.pop();
+    localStorage.setItem('hadiths_history', JSON.stringify(hadithsHistory));
+  }
+}
+
+function showArchive(type, btn) {
+  document.querySelectorAll('.arch-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderArchive(type);
+}
+
+function renderArchive(type) {
+  const list = type === 'ayahs' ? ayahsHistory : hadithsHistory;
+  const container = document.getElementById('archiveList');
+  
+  if (list.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">لا يوجد أرشيف بعد — تفضّل كل يوم لتراكم الأرشيف 😊</p>';
+    return;
+  }
+  
+  container.innerHTML = list.map(item => `
+    <div class="archive-item">
+      <div class="arc-date">📅 ${item.date}</div>
+      <div class="arc-text">${item.text}</div>
+      <div class="arc-ref">${item.ref || item.sanad || ''}</div>
+    </div>
+  `).join('');
+}
+
+function toHijri(year, month, day) {
+  const jd = Math.floor((1461*(year+4800+Math.floor((month-14)/12)))/4)+Math.floor((367*(month-2-12*Math.floor((month-14)/12)))/12)-Math.floor((3*Math.floor((year+4900+Math.floor((month-14)/12))/100))/4)+day-32075;
+  let l=jd-1948440+10632;const n=Math.floor((l-1)/10631);l=l-10631*n+354;
+  const j=(Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719))+(Math.floor(l/5670))*(Math.floor((43*l)/15238));
+  l=l-(Math.floor((30-j)/15))*(Math.floor((17719*j)/50))-(Math.floor(j/16))*(Math.floor((15238*j)/43))+29;
+  return{year:30*n+j-30,month:Math.floor((24*l)/709),day:l-Math.floor((709*Math.floor((24*l)/709))/24)};
+}
+</script>
+</body>
+</html>
